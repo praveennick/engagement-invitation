@@ -150,7 +150,6 @@ export default function Engagement() {
                 custom={1}
                 variants={fadeUp}
                 className="mt-5 text-5xl md:text-6xl font-semibold xl:text-[5rem] text-[#6b4b37] leading-[1.2] "
-                style={{ fontFamily: "cursive" }}
               >
                 Praveen <span className="text-[#c08c68]">&</span> <br />
                 Priyanka
