@@ -15,8 +15,8 @@ const GOOGLE_MAPS_EMBED_URL =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4525.730877113577!2d81.8087382!3d17.0077084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a37a33bc324b32b%3A0x8fd3e4651af67d6!2sPLUSH%20Boutique%20%26%20Beauty%20Lounge!5e1!3m2!1sen!2sin!4v1775509809181!5m2!1sen!2sin";
 const GOOGLE_MAPS_DIRECTIONS_URL = "https://maps.app.goo.gl/GxcsaQAfRYgwVSN37";
 const WHATSAPP_RSVP_URL =
-  "https://wa.me/8142721111?text=Hello%20Praveen%2C%20I%20will%20be%20joining%20your%20engagement%20celebration.";
-const FAMILY_CONTACT_NUMBER = "+919392015858";
+  "https://wa.me/8801721959?text=Hello%20Praveen%2C%20I%20will%20be%20joining%20your%20engagement%20celebration.";
+const FAMILY_CONTACT_NUMBER = "+919052166382";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -151,8 +151,8 @@ export default function Engagement() {
                 variants={fadeUp}
                 className="mt-5 text-5xl md:text-6xl font-semibold xl:text-[5rem] text-[#6b4b37] leading-[1.2] "
               >
-                Praveen <span className="text-[#c08c68]">&</span> <br />
-                Priyanka
+                Priyanka <span className="text-[#c08c68]">&</span> <br />
+                Praveen
               </motion.h1>
 
               <motion.pz
@@ -423,7 +423,7 @@ export default function Engagement() {
       </section>
 
       <footer className="px-6 py-10 text-center text-sm tracking-[0.08em] text-[#9d7b63] md:px-10">
-        Made with ❤️ for Praveen & Priyanka
+        Made with ❤️ for Priyanka & Praveen
       </footer>
     </main>
   );
