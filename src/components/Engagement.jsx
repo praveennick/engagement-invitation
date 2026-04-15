@@ -15,7 +15,7 @@ const GOOGLE_MAPS_EMBED_URL =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4525.730877113577!2d81.8087382!3d17.0077084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a37a33bc324b32b%3A0x8fd3e4651af67d6!2sPLUSH%20Boutique%20%26%20Beauty%20Lounge!5e1!3m2!1sen!2sin!4v1775509809181!5m2!1sen!2sin";
 const GOOGLE_MAPS_DIRECTIONS_URL = "https://maps.app.goo.gl/GxcsaQAfRYgwVSN37";
 const WHATSAPP_RSVP_URL =
-  "https://wa.me/8801721959?text=Hello%20Praveen%2C%20I%20will%20be%20joining%20your%20engagement%20celebration.";
+  "https://wa.me/8801721959?text=Hello%20Priyanka%2C%20I%20will%20be%20joining%20your%20engagement%20celebration.";
 const FAMILY_CONTACT_NUMBER = "+919052166382";
 
 const fadeUp = {
