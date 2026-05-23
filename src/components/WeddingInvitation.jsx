@@ -21,13 +21,13 @@ const FAMILY_CONTACT_NUMBER = "+919392015858";
 const events = [
   {
     title: "Dinner",
-    date: "21 June 2026",
+    date: "21st June 2026",
     time: "07:00 PM onwards",
     icon: "🍽️",
   },
   {
     title: "Wedding Muhurtham",
-    date: "22 June 2026",
+    date: "22nd June 2026",
     time: "02:32 AM",
     icon: "🪔",
   },
