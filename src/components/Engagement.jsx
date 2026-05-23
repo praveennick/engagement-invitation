@@ -1,21 +1,23 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import {
   CalendarDays,
   Clock3,
   MapPin,
   MessageCircle,
   Phone,
+  Utensils,
 } from "lucide-react";
 
-const EVENT_DATE_ISO = "2026-04-26T10:30:00+05:30";
+const EVENT_DATE_ISO = "2026-06-22T02:32:00+05:30";
 const GOOGLE_MAPS_EMBED_URL =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4525.730877113577!2d81.8087382!3d17.0077084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a37a33bc324b32b%3A0x8fd3e4651af67d6!2sPLUSH%20Boutique%20%26%20Beauty%20Lounge!5e1!3m2!1sen!2sin!4v1775509809181!5m2!1sen!2sin";
-const GOOGLE_MAPS_DIRECTIONS_URL = "https://maps.app.goo.gl/GxcsaQAfRYgwVSN37";
+  "https://www.google.com/maps?q=S.%20V.%20Function%20Hall%2C%20J.N.%20Road%2C%20Rajamahendravaram&output=embed";
+const GOOGLE_MAPS_DIRECTIONS_URL =
+  "https://www.google.com/maps/search/?api=1&query=S.%20V.%20Function%20Hall%2C%20J.N.%20Road%2C%20Rajamahendravaram";
 const WHATSAPP_RSVP_URL =
-  "https://wa.me/8142721111?text=Hello%20Praveen%2C%20I%20will%20be%20joining%20your%20engagement%20celebration.";
+  "https://wa.me/8142721111?text=Hello%20Praveen%2C%20I%20will%20be%20joining%20your%20wedding%20celebration.";
 const FAMILY_CONTACT_NUMBER = "+919392015858";
 
 const fadeUp = {
@@ -27,27 +29,27 @@ const fadeUp = {
   }),
 };
 
-function useCountdown(targetDate) {
-  const calculateTimeLeft = () => {
-    const difference = new Date(targetDate).getTime() - new Date().getTime();
+function getTimeLeft(targetDate) {
+  const difference = new Date(targetDate).getTime() - new Date().getTime();
 
-    if (difference <= 0) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-    }
+  if (difference <= 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  }
 
-    return {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / 1000 / 60) % 60),
-      seconds: Math.floor((difference / 1000) % 60),
-    };
+  return {
+    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((difference / 1000 / 60) % 60),
+    seconds: Math.floor((difference / 1000) % 60),
   };
+}
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+function useCountdown(targetDate) {
+  const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(targetDate));
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      setTimeLeft(getTimeLeft(targetDate));
     }, 1000);
 
     return () => clearInterval(timer);
@@ -59,48 +61,64 @@ function useCountdown(targetDate) {
 const eventDetails = [
   {
     icon: CalendarDays,
-    label: "Date",
-    value: "Sunday, 26 April 2026",
+    label: "Sumuhurtham",
+    value: "Sunday, 21 June 2026 night at 2:32 AM",
   },
   {
     icon: Clock3,
-    label: "Time",
-    value: "10:30 AM onwards",
+    label: "Early hours",
+    value: "Early hours of Monday, 22 June 2026",
   },
   {
     icon: MapPin,
     label: "Venue",
-    value: "Plush Banquet Hall, JN Road, Rajahmundry",
+    value: "S. V. Function Hall, J.N. Road, Rajamahendravaram",
+  },
+  {
+    icon: Utensils,
+    label: "Dinner",
+    value: "Sunday, 21 June 2026 at 7:00 PM onwards at the venue",
   },
 ];
 
-function OrnamentalDivider() {
+function OrnamentalDivider({ light = false }) {
   return (
     <div className="flex items-center justify-center gap-4 py-2">
-      <div className="h-px w-14 bg-gradient-to-r from-transparent to-[#d2b39b]" />
-      <div className="h-2.5 w-2.5 rotate-45 rounded-[2px] border border-[#c79d79] bg-[#f5e1cf]" />
-      <div className="h-px w-14 bg-gradient-to-l from-transparent to-[#d2b39b]" />
+      <div
+        className={`h-px w-16 bg-gradient-to-r from-transparent ${
+          light ? "to-[#f0d892]" : "to-[#9f7a2f]"
+        }`}
+      />
+      <div
+        className={`h-2.5 w-2.5 rotate-45 rounded-[2px] border ${
+          light
+            ? "border-[#f0d892] bg-[#fff4cf]"
+            : "border-[#9f7a2f] bg-[#f1d99c]"
+        }`}
+      />
+      <div
+        className={`h-px w-16 bg-gradient-to-l from-transparent ${
+          light ? "to-[#f0d892]" : "to-[#9f7a2f]"
+        }`}
+      />
     </div>
   );
 }
 
-function FloralCorner({ className = "" }) {
+function LuxuryMotif({ className = "" }) {
   return (
-    <div className={`pointer-events-none absolute ${className}`}>
-      <div className="relative h-28 w-28 md:h-36 md:w-36">
-        <div className="absolute left-6 top-10 h-14 w-14 rounded-full bg-[#f3cdb3]/60 blur-[2px]" />
-        <div className="absolute left-0 top-12 h-12 w-20 -rotate-12 rounded-full border border-[#e5bf9f]/60 bg-[#f8e5d6]/65" />
-        <div className="absolute left-8 top-2 h-14 w-14 rotate-12 rounded-full border border-[#e5bf9f]/60 bg-[#f8e5d6]/65" />
-        <div className="absolute left-12 top-16 h-12 w-12 rounded-full border border-[#e5bf9f]/60 bg-[#f6dcc7]/70" />
-        <div className="absolute left-20 top-3 h-16 w-[2px] rotate-12 bg-[#d8ba97]" />
-        <div className="absolute left-24 top-0 h-8 w-4 -rotate-12 rounded-full border border-[#d8ba97]/70 bg-[#efe2c6]/80" />
-        <div className="absolute left-24 top-8 h-8 w-4 rotate-12 rounded-full border border-[#d8ba97]/70 bg-[#efe2c6]/80" />
+    <div className={`pointer-events-none absolute ${className}`} aria-hidden="true">
+      <div className="relative h-48 w-48 rounded-full border border-[#d9bb69]/25">
+        <div className="absolute inset-5 rounded-full border border-[#d9bb69]/15" />
+        <div className="absolute inset-12 rounded-full border border-[#d9bb69]/20" />
+        <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-[#d9bb69]/30 to-transparent" />
+        <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-[#d9bb69]/30 to-transparent" />
       </div>
     </div>
   );
 }
 
-export default function Engagement() {
+export default function Marriage() {
   const countdown = useCountdown(EVENT_DATE_ISO);
 
   const countdownItems = useMemo(
@@ -114,316 +132,312 @@ export default function Engagement() {
   );
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#fffaf4] text-[#5b4636] antialiased">
-      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#fffaf4_0%,#fff4eb_50%,#fffaf4_100%)]">
-        <FloralCorner className="top-0 opacity-60" />
-        <FloralCorner className="bottom-4 left-6 rotate-[110deg] opacity-45" />
-        <FloralCorner className="right-0 top-0 scale-x-[-1] opacity-60" />
-        <FloralCorner className="bottom-4 right-6 scale-x-[-1] rotate-[110deg] opacity-45" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(235,189,145,0.22),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(185,122,87,0.12),transparent_24%)]" />
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d9b79b] to-transparent" />
-        <div className="relative mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28 lg:py-32">
-          <div className="grid items-center gap-14 lg:grid-cols-[1.06fr_0.94fr] lg:gap-16">
+    <main className="min-h-screen overflow-x-hidden bg-[#071b17] text-[#fff8e7] antialiased">
+      <section className="relative isolate min-h-screen overflow-hidden bg-[#071b17]">
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,#051411_0%,#09251f_44%,#340e19_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(217,187,105,0.24),transparent_25%),radial-gradient(circle_at_80%_18%,rgba(127,29,45,0.28),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(255,248,231,0.12),transparent_34%)]" />
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#d9bb69] to-transparent" />
+        <LuxuryMotif className="-left-20 top-16 opacity-70" />
+        <LuxuryMotif className="-right-20 bottom-20 opacity-50" />
+
+        <div className="relative mx-auto grid min-h-screen max-w-7xl content-center gap-12 px-6 py-16 md:px-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16">
+          <Motion.aside
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            className="flex flex-col justify-between border-y border-[#d9bb69]/40 py-8 lg:min-h-[640px]"
+          >
             <div>
-              <motion.p
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                className="text-[11px] uppercase tracking-[0.42em] text-[#a16d49] md:text-xs"
-              >
-                Together with your families
-              </motion.p>
-
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                custom={0.5}
-                variants={fadeUp}
-                className="mt-6"
-              >
-                <OrnamentalDivider />
-              </motion.div>
-
-              <motion.h1
-                initial="hidden"
-                animate="visible"
-                custom={1}
-                variants={fadeUp}
-                className="mt-5 text-5xl md:text-6xl font-semibold xl:text-[5rem] text-[#6b4b37] leading-[1.2] "
-              >
-                Praveen <span className="text-[#c08c68]">&</span> <br />
+              <p className="text-[11px] uppercase tracking-[0.46em] text-[#e6c873] md:text-xs">
+                Gummadi's wedding invitation
+              </p>
+              <h1 className="mt-8 text-6xl font-semibold leading-[0.95] text-[#fff8e7] md:text-7xl xl:text-8xl">
+                Praveen
+                <span className="mt-4 block text-[#d9bb69]">&</span>
                 Priyanka
-              </motion.h1>
-
-              <motion.pz
-                initial="hidden"
-                animate="visible"
-                custom={2}
-                variants={fadeUp}
-                className="mt-8 max-w-2xl text-[15px] leading-8 text-[#7b6252] md:text-lg md:leading-9"
-              >
-                Inviting you to join our engagement celebration and bless the
-                beginning of our new journey together.
-              </motion.pz>
-
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                custom={3}
-                variants={fadeUp}
-                className="mt-10 flex flex-wrap gap-4"
-              >
-                <a
-                  href="#details"
-                  className="rounded-full bg-[#a86d49] px-7 py-3.5 text-sm font-semibold tracking-[0.08em] text-white shadow-[0_12px_30px_rgba(168,109,73,0.22)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(168,109,73,0.28)]"
-                >
-                  View Invitation
-                </a>
-                <a
-                  href={GOOGLE_MAPS_DIRECTIONS_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full border border-[#d8b89f] bg-white/85 px-7 py-3.5 text-sm font-semibold tracking-[0.08em] text-[#7d5b45] shadow-[0_8px_24px_rgba(120,86,61,0.08)] transition duration-300 hover:-translate-y-0.5 hover:bg-white"
-                >
-                  Get Directions
-                </a>
-              </motion.div>
+              </h1>
+              <p className="mt-8 max-w-md text-base leading-8 text-[#e8dec1] md:text-lg">
+                A timeless celebration of love, family, blessings, and the
+                beginning of a sacred journey together.
+              </p>
             </div>
 
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              custom={4}
-              variants={fadeUp}
-              className="relative rounded-[40px] border border-[#ecd8c7] bg-white/75 p-6 shadow-[0_24px_80px_rgba(157,112,77,0.16)] backdrop-blur-xl md:p-8"
-            >
-              <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#d7b496] to-transparent" />
-              <div className="rounded-[32px] border border-[#f1e3d6] bg-[linear-gradient(180deg,#fffdfb_0%,#fff5ec_100%)] p-6 md:p-7">
-                <p className="text-center text-[11px] uppercase tracking-[0.42em] text-[#b07f5c] md:text-xs">
-                  Save the date
-                </p>
-                <p className="mt-5 text-center text-2xl font-semibold tracking-[-0.03em] text-[#6d4f3b] md:text-[2rem]">
-                  Sunday, 26 April 2026
-                </p>
-                <p className="mt-2 text-center text-[11px] uppercase tracking-[0.34em] text-[#9d7659] md:text-xs">
-                  10:30 AM onwards
-                </p>
+            <div className="mt-10 grid grid-cols-2 gap-3 sm:max-w-md">
+              {countdownItems.map(([label, value]) => (
+                <Motion.div
+                  key={label}
+                  whileHover={{ y: -4 }}
+                  className="border border-[#d9bb69]/35 bg-[#fff8e7]/8 p-4 text-center shadow-[0_18px_48px_rgba(0,0,0,0.16)] backdrop-blur-md"
+                >
+                  <p className="text-3xl font-semibold text-[#f4d77c]">
+                    {String(value).padStart(2, "0")}
+                  </p>
+                  <p className="mt-1 text-[10px] uppercase tracking-[0.26em] text-[#d8c893]">
+                    {label}
+                  </p>
+                </Motion.div>
+              ))}
+            </div>
+          </Motion.aside>
 
-                <div className="my-6">
+          <Motion.div
+            initial="hidden"
+            animate="visible"
+            custom={1}
+            variants={fadeUp}
+            className="relative"
+          >
+            <div className="absolute -inset-4 border border-[#d9bb69]/25" />
+            <div className="relative bg-[#fff8e7] p-4 text-[#17261f] shadow-[0_40px_120px_rgba(0,0,0,0.36)] md:p-6">
+              <div className="border border-[#b8943b] p-6 md:p-10">
+                <div className="border border-[#d8bf76]/70 px-5 py-10 text-center md:px-12 md:py-14">
+                  <p className="text-[11px] uppercase tracking-[0.42em] text-[#8d6a26]">
+                    Srirasthu Subhamasthu Avighnamasthu
+                  </p>
                   <OrnamentalDivider />
-                </div>
+                  <p className="mt-6 text-sm font-semibold uppercase tracking-[0.24em] text-[#6d5322]">
+                    Gummadi Anand & Smt. Lokeswari
+                  </p>
+                  <p className="mt-2 text-xs uppercase tracking-[0.22em] text-[#806638]">
+                    Rajamahendravaram
+                  </p>
+                  <h2 className="mt-8 text-4xl font-semibold leading-tight text-[#123c32] md:text-6xl">
+                    Wedding Invitation
+                  </h2>
+                  <p className="mx-auto mt-7 max-w-2xl text-base leading-8 text-[#4f4739] md:text-lg">
+                    Solicit your gracious presence with family and friends on
+                    the auspicious occasion of the marriage of Chi. Praveen
+                    Kumar with Chi.La.Sow. Priyanka.
+                  </p>
 
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {countdownItems.map(([label, value]) => (
-                    <motion.div
-                      key={label}
-                      className="rounded-[22px] border border-[#ecd8c7] bg-white/95 px-3 py-4 text-center shadow-[0_10px_24px_rgba(143,108,83,0.06)]"
-                      whileHover={{ y: -4 }}
+                  <div className="my-8 grid gap-4 border-y border-[#d8bf76] py-6 md:grid-cols-2">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.28em] text-[#8d6a26]">
+                        Sumuhurtham
+                      </p>
+                      <p className="mt-2 text-xl font-semibold text-[#123c32]">
+                        21 June 2026, 2:32 AM
+                      </p>
+                      <p className="mt-1 text-sm text-[#6f614b]">
+                        Early hours of Monday
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.28em] text-[#8d6a26]">
+                        Dinner
+                      </p>
+                      <p className="mt-2 text-xl font-semibold text-[#123c32]">
+                        21 June 2026, 7:00 PM
+                      </p>
+                      <p className="mt-1 text-sm text-[#6f614b]">
+                        Onwards at the venue
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className="text-sm leading-7 text-[#4f4739] md:text-base">
+                    Daughter of Sri Kosuri Chinnarao and Smt. Krishnaveni of
+                    Rajamahendravaram.
+                  </p>
+
+                  <div className="mt-9 flex flex-wrap justify-center gap-3">
+                    <a
+                      href="#details"
+                      className="bg-[#123c32] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[#fff8e7] shadow-[0_14px_34px_rgba(18,60,50,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#1a4b3f]"
                     >
-                      <p className="text-2xl font-semibold tracking-[-0.04em] text-[#8b5e3f] md:text-3xl">
-                        {String(value).padStart(2, "0")}
-                      </p>
-                      <p className="mt-1.5 text-[10px] uppercase tracking-[0.24em] text-[#af8768] md:text-[11px]">
-                        {label}
-                      </p>
-                    </motion.div>
-                  ))}
+                      View Details
+                    </a>
+                    <a
+                      href={GOOGLE_MAPS_DIRECTIONS_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="border border-[#b8943b] bg-transparent px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[#123c32] transition duration-300 hover:-translate-y-0.5 hover:bg-[#f5ead0]"
+                    >
+                      Directions
+                    </a>
+                  </div>
                 </div>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </Motion.div>
         </div>
       </section>
 
       <section
         id="details"
-        className="relative border-y border-[#ecd8c7] bg-[linear-gradient(180deg,#fff8f2_0%,#fffdfb_100%)]"
+        className="relative bg-[#fff8e7] px-6 py-16 text-[#17261f] md:px-10 md:py-24"
       >
-        <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-[#dec1aa] to-transparent" />
-        <div className="mx-auto max-w-7xl px-6 py-16 md:px-10 md:py-24">
-          <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.15 }}
-              variants={fadeUp}
-              className="rounded-[34px] border border-[#ecd8c7] bg-white/80 p-7 shadow-[0_16px_50px_rgba(157,112,77,0.08)] backdrop-blur-md md:p-9"
-            >
-              <p className="text-[11px] uppercase tracking-[0.38em] text-[#b07f5c] md:text-xs">
-                Invitation
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.42em] text-[#8d6a26]">
+                Ceremony
               </p>
-              <h2 className="mt-5 text-3xl font-semibold leading-[1.08] tracking-[-0.03em] text-[#6d4f3b] md:text-5xl">
-                We would be honored by your presence and blessings.
+              <h2 className="mt-5 text-4xl font-semibold leading-tight text-[#123c32] md:text-6xl">
+                A wedding day shaped by blessings.
               </h2>
-              <div className="mt-6 max-w-30">
-                <OrnamentalDivider />
-              </div>
-              <p className="mt-6 text-[15px] leading-8 text-[#7d6657] md:text-base md:leading-8">
-                Together with your families, we warmly invite you to join us as
-                we celebrate our engagement. Your presence will make this
-                occasion even more meaningful and memorable for us.
-              </p>
-            </motion.div>
+            </div>
+            <p className="text-base leading-8 text-[#5a5142] md:text-lg">
+              Gummadi Anand and Smt. Lokeswari request the pleasure of your
+              company as Chi. Praveen Kumar weds Chi.La.Sow. Priyanka.
+            </p>
+          </div>
 
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.15 }}
-              custom={1}
-              variants={fadeUp}
-              className="rounded-[34px] border border-[#ecd8c7] bg-white/80 p-6 shadow-[0_16px_50px_rgba(157,112,77,0.08)] backdrop-blur-md md:p-8"
-            >
-              <h3 className="text-2xl font-semibold tracking-[-0.02em] text-[#6d4f3b] md:text-[2rem]">
-                Event Details
-              </h3>
-              <div className="mt-7 space-y-4">
-                {eventDetails.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <motion.div
-                      key={item.label}
-                      className="flex gap-4 rounded-[26px] border border-[#f0dfd1] bg-[#fffaf5]/95 p-4 md:p-5"
-                      whileHover={{ y: -3, scale: 1.01 }}
-                    >
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white shadow-[0_8px_18px_rgba(151,111,82,0.08)]">
-                        <Icon className="h-5 w-5 text-[#a86d49]" />
-                      </div>
-                      <div>
-                        <p className="text-[10px] uppercase tracking-[0.24em] text-[#b08769] md:text-[11px]">
-                          {item.label}
-                        </p>
-                        <p className="mt-1.5 text-sm leading-7 text-[#6f5849] md:text-[15px]">
-                          {item.value}
-                        </p>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </motion.div>
+          <div className="grid gap-px overflow-hidden border border-[#c7a958] bg-[#c7a958] md:grid-cols-2 lg:grid-cols-4">
+            {eventDetails.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <Motion.div
+                  key={item.label}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.15 }}
+                  custom={index}
+                  variants={fadeUp}
+                  className="bg-[#fffaf0] p-6 md:p-8"
+                >
+                  <div className="mb-8 flex h-12 w-12 items-center justify-center border border-[#c7a958] bg-[#123c32] text-[#f4d77c]">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-[#8d6a26]">
+                    {item.label}
+                  </p>
+                  <p className="mt-4 text-base leading-8 text-[#3f392f]">
+                    {item.value}
+                  </p>
+                </Motion.div>
+              );
+            })}
+          </div>
+
+          <div className="mt-12 grid gap-px overflow-hidden border border-[#c7a958] bg-[#c7a958] lg:grid-cols-2">
+            <div className="bg-[#123c32] p-7 text-[#fff8e7] md:p-10">
+              <p className="text-[11px] uppercase tracking-[0.34em] text-[#f4d77c]">
+                With blessings from
+              </p>
+              <p className="mt-5 text-xl leading-9">
+                Late Gummadi Chukkamma garu, Late Gummadi Veerraju garu, and
+                Smt. Bhaskaramma.
+              </p>
+            </div>
+            <div className="bg-[#fffaf0] p-7 md:p-10">
+              <p className="text-[11px] uppercase tracking-[0.34em] text-[#8d6a26]">
+                With best compliments from
+              </p>
+              <p className="mt-5 text-lg leading-8 text-[#3f392f]">
+                Gummadi Surya Prakash, Smt. Rajitha, Gummadi Nagesh, Smt.
+                Annapurna, Gummadi Prabhukumar, and near and dear.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       <section
         id="location"
-        className="relative mx-auto max-w-7xl px-6 py-16 md:px-10 md:py-24"
+        className="bg-[#0a211c] px-6 py-16 text-[#fff8e7] md:px-10 md:py-24"
       >
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          variants={fadeUp}
-          className="mb-8 flex flex-wrap items-end justify-between gap-4"
-        >
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.38em] text-[#b07f5c] md:text-xs">
-              Venue & directions
-            </p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-[#6d4f3b] md:text-5xl">
-              Find us here
-            </h2>
-          </div>
-          <a
-            href={GOOGLE_MAPS_DIRECTIONS_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-full bg-[#a86d49] px-6 py-3.5 text-sm font-semibold tracking-[0.08em] text-white shadow-[0_12px_30px_rgba(168,109,73,0.22)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(168,109,73,0.28)]"
-          >
-            Open in Google Maps
-          </a>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          custom={1}
-          variants={fadeUp}
-          className="overflow-hidden rounded-[38px] border border-[#ecd8c7] bg-white/80 shadow-[0_18px_60px_rgba(157,112,77,0.1)] backdrop-blur-md"
-        >
-          <div className="aspect-[16/8] w-full bg-[#f8ede2]">
-            <iframe
-              title="Venue Map"
-              src={GOOGLE_MAPS_EMBED_URL}
-              className="h-full w-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-
-          <div className="grid gap-4 p-6 md:grid-cols-2 md:p-7">
-            <div className="rounded-[26px] border border-[#f0dfd1] bg-[#fffaf5] p-5">
-              <p className="text-[10px] uppercase tracking-[0.24em] text-[#b08769] md:text-[11px]">
-                Venue
-              </p>
-              <p className="mt-2 text-sm leading-7 text-[#6f5849] md:text-[15px]">
-                Plush Banquet Hall, JN Road, Rajahmundry
-              </p>
-            </div>
-            <div className="rounded-[26px] border border-[#f0dfd1] bg-[#fffaf5] p-5">
-              <p className="text-[10px] uppercase tracking-[0.24em] text-[#b08769] md:text-[11px]">
-                Contact
-              </p>
-              <a
-                href={`tel:${FAMILY_CONTACT_NUMBER}`}
-                className="mt-2 inline-flex items-center gap-2 text-sm leading-7 text-[#6f5849] transition hover:text-[#a86d49] md:text-[15px]"
-              >
-                <Phone className="h-4 w-4" />
-                {FAMILY_CONTACT_NUMBER}
-              </a>
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      <section className="relative border-t border-[#ecd8c7] bg-[linear-gradient(180deg,#fffdfb_0%,#fff6ee_100%)]">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:px-10 md:py-20">
-          <motion.div
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-stretch">
+          <Motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.15 }}
             variants={fadeUp}
-            className="rounded-[34px] border border-[#ecd8c7] bg-white/80 p-7 shadow-[0_16px_50px_rgba(157,112,77,0.08)] backdrop-blur-md md:p-8"
+            className="flex flex-col justify-between border border-[#d9bb69]/45 p-7 md:p-10"
           >
-            <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-              <div>
-                <div className="flex items-center gap-3">
-                  <MessageCircle className="h-5 w-5 text-[#a86d49]" />
-                  <h3 className="text-2xl font-semibold tracking-[-0.02em] text-[#6d4f3b] md:text-[2rem]">
-                    RSVP
-                  </h3>
-                </div>
-                <p className="mt-4 text-[15px] leading-8 text-[#7d6657]">
-                  Kindly confirm your presence with your good wishes.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href={WHATSAPP_RSVP_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full bg-[#a86d49] px-6 py-3.5 text-sm font-semibold tracking-[0.08em] text-white shadow-[0_12px_30px_rgba(168,109,73,0.22)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(168,109,73,0.28)]"
-                >
-                  RSVP on WhatsApp
-                </a>
-                <a
-                  href={GOOGLE_MAPS_DIRECTIONS_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full border border-[#d8b89f] bg-white px-6 py-3.5 text-sm font-semibold tracking-[0.08em] text-[#7d5b45] shadow-[0_8px_24px_rgba(120,86,61,0.08)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#fff8f2]"
-                >
-                  View Location
-                </a>
-              </div>
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.42em] text-[#f4d77c]">
+                Venue & directions
+              </p>
+              <h2 className="mt-5 text-4xl font-semibold leading-tight md:text-5xl">
+                S. V. Function Hall
+              </h2>
+              <p className="mt-5 text-base leading-8 text-[#e6dcc0]">
+                J.N. Road, Rajamahendravaram
+              </p>
             </div>
-          </motion.div>
+
+            <div className="mt-10 space-y-4">
+              <a
+                href={`tel:${FAMILY_CONTACT_NUMBER}`}
+                className="flex items-center gap-3 border border-[#d9bb69]/35 px-5 py-4 text-sm text-[#fff8e7] transition hover:border-[#f4d77c] hover:bg-[#fff8e7]/8"
+              >
+                <Phone className="h-4 w-4 text-[#f4d77c]" />
+                {FAMILY_CONTACT_NUMBER}
+              </a>
+              <a
+                href={GOOGLE_MAPS_DIRECTIONS_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex bg-[#f4d77c] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[#0a211c] shadow-[0_16px_36px_rgba(0,0,0,0.22)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ffe89b]"
+              >
+                Open in Google Maps
+              </a>
+            </div>
+          </Motion.div>
+
+          <Motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            custom={1}
+            variants={fadeUp}
+            className="min-h-[360px] border border-[#d9bb69]/45 bg-[#fff8e7]"
+          >
+            <iframe
+              title="Venue Map"
+              src={GOOGLE_MAPS_EMBED_URL}
+              className="h-full min-h-[360px] w-full"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </Motion.div>
         </div>
       </section>
 
-      <footer className="px-6 py-10 text-center text-sm tracking-[0.08em] text-[#9d7b63] md:px-10">
-        Made with ❤️ for Praveen & Priyanka
+      <section className="bg-[#fff8e7] px-6 py-16 text-[#17261f] md:px-10 md:py-20">
+        <Motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={fadeUp}
+          className="mx-auto grid max-w-7xl gap-8 border-y border-[#c7a958] py-10 md:grid-cols-[1fr_auto] md:items-center"
+        >
+          <div>
+            <div className="flex items-center gap-3">
+              <MessageCircle className="h-5 w-5 text-[#8d6a26]" />
+              <h3 className="text-3xl font-semibold text-[#123c32] md:text-4xl">
+                RSVP
+              </h3>
+            </div>
+            <p className="mt-4 text-base leading-8 text-[#5a5142]">
+              Kindly confirm your presence and bless the couple.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            <a
+              href={WHATSAPP_RSVP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="bg-[#123c32] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[#fff8e7] transition hover:bg-[#1a4b3f]"
+            >
+              RSVP on WhatsApp
+            </a>
+            <a
+              href={GOOGLE_MAPS_DIRECTIONS_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="border border-[#b8943b] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[#123c32] transition hover:bg-[#f5ead0]"
+            >
+              View Location
+            </a>
+          </div>
+        </Motion.div>
+      </section>
+
+      <footer className="bg-[#071b17] px-6 py-10 text-center text-sm uppercase tracking-[0.18em] text-[#d9bb69] md:px-10">
+        Made with love for Praveen & Priyanka
       </footer>
     </main>
   );

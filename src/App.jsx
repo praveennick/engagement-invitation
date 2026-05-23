@@ -1,12 +1,10 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
-import heroImg from "./assets/hero.png";
 import "./App.css";
-import Engagement from "./components/Engagement";
+import Marriage from "./components/Engagement";
+import WeddingInvitation from "./components/WeddingInvitation";
 
 function App() {
-  return <Engagement />;
+  // return <Marriage />;
+  return <WeddingInvitation />;
 }
 
 export default App;
