@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   CalendarDays,
@@ -9,6 +9,7 @@ import {
   Sparkles,
   Phone,
   UtensilsCrossed,
+  CalendarPlus,
 } from "lucide-react";
 import templeImage from "../assets/temple.png";
 
@@ -20,6 +21,7 @@ const WHATSAPP_RSVP_URL =
   "https://wa.me/918142721111?text=Hi%20Praveen%2C%20we%20will%20be%20joining%20your%20wedding%20celebration.";
 
 const FAMILY_CONTACT_NUMBER = "+919392015858";
+const MUHURTHAM_DATE = new Date("2026-06-22T02:32:00+05:30");
 
 const headingFont = {
   fontFamily: "'Cinzel', serif",
@@ -39,6 +41,9 @@ const primaryButton =
 const greenButton =
   "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#c7a158] bg-[#291410] px-7 py-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#fff8e6] shadow-[0_15px_34px_rgba(41,20,16,.24),inset_0_1px_0_rgba(255,255,255,.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#3a1c16] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c7a158]/55";
 
+const subtleButton =
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#c9aa63]/60 bg-[#fff9ed]/80 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#4b2f21] shadow-[0_10px_22px_rgba(71,43,17,.10),inset_0_1px_0_rgba(255,255,255,.72)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#a57e37] hover:bg-[#fff5df] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b68a3a]/45";
+
 const events = [
   {
     title: "Dinner",
@@ -48,17 +53,29 @@ const events = [
   },
   {
     title: "Wedding Muhurtham",
-    date: "22nd June 2026",
+    date: "Early hours of 22nd June 2026",
     time: "02:32 AM",
     Icon: Sparkles,
   },
 ];
 
-const countdownItems = [
-  { value: "24", label: "Days" },
-  { value: "12", label: "Hours" },
-  { value: "45", label: "Mins" },
-  { value: "30", label: "Secs" },
+const calendarEvents = [
+  {
+    title: "Priyanka & Praveen Wedding Dinner",
+    fileName: "priyanka-praveen-dinner.ics",
+    start: "20260621T190000",
+    end: "20260621T223000",
+    description:
+      "Wedding dinner for Priyanka and Praveen at S.V. Function Hall.",
+  },
+  {
+    title: "Priyanka & Praveen Wedding Muhurtham",
+    fileName: "priyanka-praveen-muhurtham.ics",
+    start: "20260622T023200",
+    end: "20260622T043000",
+    description:
+      "Wedding muhurtham for Priyanka and Praveen, early hours of 22 June.",
+  },
 ];
 
 const lanterns = [
@@ -68,6 +85,57 @@ const lanterns = [
   { left: "83%", top: "28%", size: 38, delay: 0.7 },
   { left: "45%", top: "12%", size: 30, delay: 1.4 },
 ];
+
+function buildCalendarHref(event) {
+  const calendarText = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Priyanka Praveen Wedding//Invitation//EN",
+    "CALSCALE:GREGORIAN",
+    "BEGIN:VEVENT",
+    `UID:${event.fileName}@priyanka-praveen-wedding`,
+    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").split(".")[0]}Z`,
+    `DTSTART;TZID=Asia/Kolkata:${event.start}`,
+    `DTEND;TZID=Asia/Kolkata:${event.end}`,
+    `SUMMARY:${event.title}`,
+    "LOCATION:S.V. Function Hall, J.N. Road, Rajamahendravaram",
+    `DESCRIPTION:${event.description}`,
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+
+  return `data:text/calendar;charset=utf-8,${encodeURIComponent(calendarText)}`;
+}
+
+function getCountdownItems() {
+  const diff = Math.max(0, MUHURTHAM_DATE.getTime() - Date.now());
+  const totalSeconds = Math.floor(diff / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return [
+    { value: String(days), label: "Days" },
+    { value: String(hours).padStart(2, "0"), label: "Hours" },
+    { value: String(minutes).padStart(2, "0"), label: "Mins" },
+    { value: String(seconds).padStart(2, "0"), label: "Secs" },
+  ];
+}
+
+function useCountdown() {
+  const [items, setItems] = useState(getCountdownItems);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setItems(getCountdownItems());
+    }, 1000);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  return items;
+}
 
 function FloatingLanterns() {
   return (
@@ -337,25 +405,50 @@ function WeddingDetailsCard() {
       </div>
 
       <p className="text-[11px] uppercase tracking-[0.32em] text-[#8c692d]">
-        Wedding Ceremony
+        Wedding Celebration
       </p>
 
       <h2
         className="mt-3 text-[29px] font-semibold uppercase tracking-[0.08em] text-[#3f2219] sm:text-[34px]"
         style={headingFont}
       >
-        22 June 2026
+        21 June 2026
       </h2>
 
       <OrnamentalDivider className="my-5" />
 
       <p className="mt-4 flex items-center justify-center gap-2 text-[15px] font-medium text-[#573728]">
-        <Clock size={15} /> 02:32 AM Muhurtham
+        <Clock size={15} /> Dinner from 07:00 PM onwards
+      </p>
+
+      <p className="mt-2 flex items-center justify-center gap-2 text-[15px] font-medium text-[#573728]">
+        <Sparkles size={15} /> Muhurtham at 02:32 AM, early hours of 22 June
       </p>
 
       <p className="mt-2 flex items-center justify-center gap-2 text-[15px] font-medium text-[#573728]">
         <MapPin size={15} /> S.V. Function Hall, Rajamahendravaram
       </p>
+
+      <p className="mx-auto mt-5 max-w-xl text-[14px] font-medium leading-7 text-[#573728]/82 sm:text-[15px]">
+        Please join us on the evening of 21 June; the sacred muhurtham follows
+        after midnight in the early hours of 22 June.
+      </p>
+
+      <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        {calendarEvents.map((event) => (
+          <a
+            key={event.fileName}
+            href={buildCalendarHref(event)}
+            download={event.fileName}
+            className={subtleButton}
+          >
+            <CalendarPlus size={15} />{" "}
+            {event.fileName.includes("dinner")
+              ? "Add Dinner"
+              : "Add Muhurtham"}
+          </a>
+        ))}
+      </div>
     </Section>
   );
 }
@@ -428,6 +521,8 @@ function EventsSection() {
 }
 
 function CountdownSection() {
+  const countdownItems = useCountdown();
+
   return (
     <Section className="overflow-hidden bg-[linear-gradient(180deg,#fffaf0_0%,#f3e8cc_100%)] px-6 py-8 text-center sm:px-8 sm:py-9 lg:col-span-2">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(214,181,101,.16),transparent_42%)]" />
@@ -567,7 +662,7 @@ function RsvpSection() {
         whileHover={{ scale: 1.03 }}
         className={`mt-6 ${greenButton}`}
       >
-        <MessageCircle size={18} /> RSVP on WhatsApp
+        <MessageCircle size={18} /> Send RSVP on WhatsApp
       </motion.a>
     </Section>
   );
