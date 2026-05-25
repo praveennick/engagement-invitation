@@ -10,6 +10,7 @@ import {
   Phone,
   UtensilsCrossed,
   CalendarPlus,
+  Share2,
 } from "lucide-react";
 import templeImage from "../assets/temple.png";
 
@@ -34,9 +35,6 @@ const bodyFont = {
 const scriptFont = {
   fontFamily: "'Great Vibes', cursive",
 };
-
-const primaryButton =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#b68a3a] bg-[linear-gradient(180deg,#fff9ed_0%,#e9c978_100%)] px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-[#3a2018] shadow-[0_13px_28px_rgba(71,43,17,.16),inset_0_1px_0_rgba(255,255,255,.75)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#8f6722] hover:shadow-[0_17px_34px_rgba(71,43,17,.22),inset_0_1px_0_rgba(255,255,255,.8)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b68a3a]/50";
 
 const greenButton =
   "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#c7a158] bg-[#291410] px-7 py-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#fff8e6] shadow-[0_15px_34px_rgba(41,20,16,.24),inset_0_1px_0_rgba(255,255,255,.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#3a1c16] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c7a158]/55";
@@ -123,23 +121,32 @@ function getCountdownItems() {
   ];
 }
 
+function isMuhurthamComplete() {
+  return MUHURTHAM_DATE.getTime() - Date.now() <= 0;
+}
+
 function useCountdown() {
   const [items, setItems] = useState(getCountdownItems);
+  const [isComplete, setIsComplete] = useState(isMuhurthamComplete);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
       setItems(getCountdownItems());
+      setIsComplete(isMuhurthamComplete());
     }, 1000);
 
     return () => window.clearInterval(timer);
   }, []);
 
-  return items;
+  return { items, isComplete };
 }
 
 function FloatingLanterns() {
   return (
-    <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden">
+    <div
+      className="pointer-events-none absolute inset-0 z-20 overflow-hidden"
+      aria-hidden="true"
+    >
       {lanterns.map((lantern, index) => (
         <motion.div
           key={`lantern-${index}`}
@@ -169,7 +176,10 @@ function FloatingLanterns() {
 
 function Petals() {
   return (
-    <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden opacity-50">
+    <div
+      className="pointer-events-none absolute inset-0 z-20 overflow-hidden opacity-50"
+      aria-hidden="true"
+    >
       {Array.from({ length: 12 }).map((_, index) => (
         <motion.span
           key={`petal-${index}`}
@@ -200,6 +210,7 @@ function SideBananaLeaves({ side }) {
       className={`absolute top-0 ${
         isLeft ? "left-0" : "right-0"
       } z-40 h-full w-[54px] overflow-hidden sm:w-[68px] lg:w-[96px]`}
+      aria-hidden="true"
     >
       {Array.from({ length: 7 }).map((_, index) => (
         <motion.div
@@ -304,6 +315,13 @@ function HeroTemple() {
           With the blessings of our families, we invite you to celebrate our
           sacred wedding ceremony.
         </p>
+
+        <p
+          className="mt-4 text-[19px] font-semibold text-white/90 drop-shadow-[0_3px_10px_rgba(18,29,38,.48)]"
+          lang="te"
+        >
+          శుభమస్తు
+        </p>
       </motion.div>
 
       <motion.div
@@ -328,6 +346,10 @@ function HeroTemple() {
             src={templeImage}
             alt="Premium South Indian temple gopuram"
             className="relative z-10 h-auto max-h-[61svh] w-[110vw] max-w-[520px] object-contain opacity-100 drop-shadow-[0_30px_48px_rgba(19,13,8,.38)] will-change-transform transform-gpu sm:max-h-[63svh] sm:max-w-[620px] md:max-h-[64svh] md:max-w-[720px] lg:w-[58vw] lg:max-h-[760px] lg:max-w-[840px] xl:max-w-[920px]"
+            width="2772"
+            height="3508"
+            decoding="async"
+            fetchPriority="high"
             loading="eager"
             draggable={false}
           />
@@ -389,7 +411,9 @@ function FloralBand() {
       <div className="flex w-full items-center justify-center gap-3">
         <span className="h-px flex-1 bg-gradient-to-r from-transparent via-[#c4a15b]/60 to-[#c4a15b]/25" />
         <span className="h-2.5 w-2.5 rotate-45 rounded-[2px] border border-[#b99145]/70 bg-[#fff8e8] shadow-[0_0_18px_rgba(196,161,91,.22)]" />
-        <span className="h-4 w-4 rotate-45 rounded-[3px] border border-[#b99145]/80 bg-[#f8edcf]" />
+        <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#b99145]/70 bg-[#fff8e8] text-[11px] font-semibold tracking-[0.16em] text-[#7d5529] shadow-[0_10px_24px_rgba(71,43,17,.12)]">
+          P & P
+        </span>
         <span className="h-2.5 w-2.5 rotate-45 rounded-[2px] border border-[#b99145]/70 bg-[#fff8e8] shadow-[0_0_18px_rgba(196,161,91,.22)]" />
         <span className="h-px flex-1 bg-gradient-to-l from-transparent via-[#c4a15b]/60 to-[#c4a15b]/25" />
       </div>
@@ -441,6 +465,9 @@ function WeddingDetailsCard() {
             href={buildCalendarHref(event)}
             download={event.fileName}
             className={subtleButton}
+            aria-label={`Add ${
+              event.fileName.includes("dinner") ? "dinner" : "muhurtham"
+            } to calendar`}
           >
             <CalendarPlus size={15} />{" "}
             {event.fileName.includes("dinner")
@@ -466,6 +493,10 @@ function BlessingsSection() {
           With the blessings of Gummadi Anand, Smt. Lokeswari, and our beloved
           elders, we request the honour of your presence as Priyanka and Praveen
           begin their sacred journey together.
+        </p>
+
+        <p className="mx-auto mt-4 max-w-md text-[14px] font-medium italic leading-7 text-[#8c692d]">
+          May auspiciousness, joy, and togetherness bless this celebration.
         </p>
       </div>
     </Section>
@@ -521,7 +552,7 @@ function EventsSection() {
 }
 
 function CountdownSection() {
-  const countdownItems = useCountdown();
+  const { items: countdownItems, isComplete } = useCountdown();
 
   return (
     <Section className="overflow-hidden bg-[linear-gradient(180deg,#fffaf0_0%,#f3e8cc_100%)] px-6 py-8 text-center sm:px-8 sm:py-9 lg:col-span-2">
@@ -540,40 +571,49 @@ function CountdownSection() {
           The Auspicious Day Awaits
         </h2>
 
-        <p className="mx-auto mt-5 max-w-[360px] text-[15px] font-medium leading-7 text-[#573728]/85 sm:text-[17px]">
-          Counting down to the blessed hour when two families gather as one.
-        </p>
+        {isComplete ? (
+          <p className="mx-auto mt-6 max-w-xl text-[17px] font-medium leading-8 text-[#573728]/90 sm:text-[19px]">
+            The blessed muhurtham has arrived. Thank you for being part of our
+            celebration.
+          </p>
+        ) : (
+          <>
+            <p className="mx-auto mt-5 max-w-[360px] text-[15px] font-medium leading-7 text-[#573728]/85 sm:text-[17px]">
+              Counting down to the blessed hour when two families gather as one.
+            </p>
 
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-3">
-          {countdownItems.map((item, index) => (
-            <motion.div
-              key={item.label}
-              animate={{ y: [0, -3, 0] }}
-              transition={{
-                duration: 2.5,
-                repeat: Infinity,
-                delay: index * 0.15,
-                ease: "easeInOut",
-              }}
-              className="relative min-h-[86px] overflow-hidden rounded-[12px] border border-[#d8ba6b]/50 bg-[linear-gradient(180deg,#fffbf3_0%,#f3e8cc_100%)] px-1 py-4 shadow-[0_10px_22px_rgba(61,34,22,.09),inset_0_1px_0_rgba(255,255,255,.7)] sm:min-h-[96px] sm:px-2 sm:py-5"
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(196,161,91,.11),transparent_60%)]" />
-
-              <div className="relative z-10">
-                <div
-                  className="text-[24px] font-semibold tracking-wide text-[#7d5529] sm:text-3xl"
-                  style={headingFont}
+            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-3">
+              {countdownItems.map((item, index) => (
+                <motion.div
+                  key={item.label}
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    delay: index * 0.15,
+                    ease: "easeInOut",
+                  }}
+                  className="relative min-h-[86px] overflow-hidden rounded-[12px] border border-[#d8ba6b]/50 bg-[linear-gradient(180deg,#fffbf3_0%,#f3e8cc_100%)] px-1 py-4 shadow-[0_10px_22px_rgba(61,34,22,.09),inset_0_1px_0_rgba(255,255,255,.7)] sm:min-h-[96px] sm:px-2 sm:py-5"
                 >
-                  {item.value}
-                </div>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(196,161,91,.11),transparent_60%)]" />
 
-                <div className="mt-2 text-[9px] uppercase tracking-[0.18em] text-[#573728]/70 sm:text-[10px] sm:tracking-[0.24em]">
-                  {item.label}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                  <div className="relative z-10">
+                    <div
+                      className="text-[24px] font-semibold tracking-wide text-[#7d5529] sm:text-3xl"
+                      style={headingFont}
+                    >
+                      {item.value}
+                    </div>
+
+                    <div className="mt-2 text-[9px] uppercase tracking-[0.18em] text-[#573728]/70 sm:text-[10px] sm:tracking-[0.24em]">
+                      {item.label}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </Section>
   );
@@ -608,6 +648,7 @@ function VenueSection() {
             <a
               href={`tel:${FAMILY_CONTACT_NUMBER}`}
               className="mx-auto mt-3 inline-flex items-center justify-center gap-2 text-[17px] font-semibold text-[#3f2219] transition-colors hover:text-[#7d5529]"
+              aria-label={`Call family contact ${FAMILY_CONTACT_NUMBER}`}
             >
               <Phone size={16} /> {FAMILY_CONTACT_NUMBER}
             </a>
@@ -621,10 +662,15 @@ function VenueSection() {
             href={GOOGLE_MAPS_DIRECTIONS_URL}
             target="_blank"
             rel="noreferrer"
-            className={`mt-5 ${primaryButton}`}
+            className={`mt-5 ${subtleButton}`}
+            aria-label="Get directions to S.V. Function Hall"
           >
             Get Directions
           </a>
+
+          <p className="mx-auto mt-3 max-w-xs text-[12px] font-medium leading-5 text-[#573728]/70">
+            On mobile, tap the map or directions button to open navigation.
+          </p>
         </div>
 
         <div className="overflow-hidden rounded-[14px] border border-[#d8ba6b]/45 shadow-[0_16px_34px_rgba(61,34,22,.11)]">
@@ -638,6 +684,52 @@ function VenueSection() {
         </div>
       </div>
     </Section>
+  );
+}
+
+function ShareInvitationButton() {
+  const [status, setStatus] = useState("");
+
+  const handleShare = async () => {
+    const shareData = {
+      title: "Priyanka & Praveen Wedding",
+      text: "Join us for Priyanka and Praveen's wedding celebration.",
+      url: window.location.href,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        setStatus("");
+        return;
+      }
+
+      await navigator.clipboard.writeText(window.location.href);
+      setStatus("Invitation link copied");
+    } catch (error) {
+      if (error?.name !== "AbortError") {
+        setStatus("Share from your browser menu");
+      }
+    }
+  };
+
+  return (
+    <div className="mt-4">
+      <button
+        type="button"
+        onClick={handleShare}
+        className={subtleButton}
+        aria-label="Share wedding invitation"
+      >
+        <Share2 size={15} /> Share Invitation
+      </button>
+
+      {status ? (
+        <p className="mt-2 text-[12px] font-medium text-[#573728]/70">
+          {status}
+        </p>
+      ) : null}
+    </div>
   );
 }
 
@@ -661,9 +753,12 @@ function RsvpSection() {
         whileTap={{ scale: 0.96 }}
         whileHover={{ scale: 1.03 }}
         className={`mt-6 ${greenButton}`}
+        aria-label="Send RSVP on WhatsApp"
       >
         <MessageCircle size={18} /> Send RSVP on WhatsApp
       </motion.a>
+
+      <ShareInvitationButton />
     </Section>
   );
 }
