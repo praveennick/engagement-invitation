@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   CalendarDays,
@@ -8,28 +8,49 @@ import {
   Heart,
   Sparkles,
   Phone,
+  UtensilsCrossed,
 } from "lucide-react";
 import templeImage from "../assets/temple.png";
 
 const GOOGLE_MAPS_DIRECTIONS_URL = "https://maps.app.goo.gl/8mYnpjN4gE95Hyu17";
 const GOOGLE_MAPS_EMBED_URL =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4525.768375667284!2d81.804959!3d17.006156300000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a37a3bf6658436f%3A0x9f226cd13ee3e272!2sS%20V%20Function%20Hall!5e1!3m2!1sen!2sin!4v1779564738906!5m2!1sen!2sin";
+
 const WHATSAPP_RSVP_URL =
-  "https://wa.me/918142721111?text=Hi%20Praveen%20We%20will%20be%20joining%20your%20wedding%20celebration.";
+  "https://wa.me/918142721111?text=Hi%20Praveen%2C%20we%20will%20be%20joining%20your%20wedding%20celebration.";
+
 const FAMILY_CONTACT_NUMBER = "+919392015858";
+
+const headingFont = {
+  fontFamily: "'Cinzel', serif",
+};
+
+const bodyFont = {
+  fontFamily: "'Lora', serif",
+};
+
+const scriptFont = {
+  fontFamily: "'Great Vibes', cursive",
+};
+
+const primaryButton =
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#b68a3a] bg-[linear-gradient(180deg,#fff9ed_0%,#e9c978_100%)] px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-[#3a2018] shadow-[0_13px_28px_rgba(71,43,17,.16),inset_0_1px_0_rgba(255,255,255,.75)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#8f6722] hover:shadow-[0_17px_34px_rgba(71,43,17,.22),inset_0_1px_0_rgba(255,255,255,.8)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b68a3a]/50";
+
+const greenButton =
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#c7a158] bg-[#291410] px-7 py-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#fff8e6] shadow-[0_15px_34px_rgba(41,20,16,.24),inset_0_1px_0_rgba(255,255,255,.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#3a1c16] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c7a158]/55";
 
 const events = [
   {
     title: "Dinner",
     date: "21st June 2026",
     time: "07:00 PM onwards",
-    icon: "🍽️",
+    Icon: UtensilsCrossed,
   },
   {
     title: "Wedding Muhurtham",
     date: "22nd June 2026",
     time: "02:32 AM",
-    icon: "🪔",
+    Icon: Sparkles,
   },
 ];
 
@@ -54,7 +75,7 @@ function FloatingLanterns() {
       {lanterns.map((lantern, index) => (
         <motion.div
           key={`lantern-${index}`}
-          className="absolute rounded-[45%] bg-[radial-gradient(circle_at_50%_58%,#fff6b8_0%,#ffd8bd_25%,#f8a7c9_58%,#b9dce9_100%)] opacity-75 shadow-[0_0_22px_rgba(255,215,170,.65)]"
+          className="absolute rounded-[48%] bg-[radial-gradient(circle_at_52%_54%,#fff5b8_0%,#ffe3a7_23%,#eaa0c7_57%,#d992bd_78%,rgba(217,146,189,.18)_100%)] opacity-80 shadow-[0_0_18px_rgba(255,220,164,.58),0_0_34px_rgba(223,147,192,.34)] blur-[0.2px]"
           style={{
             left: lantern.left,
             top: lantern.top,
@@ -80,16 +101,16 @@ function FloatingLanterns() {
 
 function Petals() {
   return (
-    <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden">
-      {Array.from({ length: 14 }).map((_, index) => (
+    <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden opacity-50">
+      {Array.from({ length: 12 }).map((_, index) => (
         <motion.span
           key={`petal-${index}`}
-          className="absolute text-[12px] text-[#caa269]/45"
+          className="absolute h-1.5 w-1.5 rotate-45 rounded-[1px] bg-[#c59a46]/55 text-[0px] text-transparent shadow-[0_0_12px_rgba(197,154,70,.28)]"
           initial={{ y: -80, x: `${(index * 19) % 100}%`, rotate: 0 }}
           animate={{
             y: 1400,
             x: `${((index * 19) % 100) + (index % 2 ? 7 : -7)}%`,
-            rotate: 240,
+            rotate: 220,
           }}
           transition={{
             duration: 18 + (index % 7),
@@ -97,15 +118,7 @@ function Petals() {
             delay: index * 0.6,
             ease: "linear",
           }}
-        >
-          {index % 4 === 0
-            ? "❋"
-            : index % 4 === 1
-              ? "✦"
-              : index % 4 === 2
-                ? "❀"
-                : "•"}
-        </motion.span>
+        />
       ))}
     </div>
   );
@@ -118,17 +131,17 @@ function SideBananaLeaves({ side }) {
     <div
       className={`absolute top-0 ${
         isLeft ? "left-0" : "right-0"
-      } z-40 h-full w-[68px] overflow-hidden`}
+      } z-40 h-full w-[54px] overflow-hidden sm:w-[68px] lg:w-[96px]`}
     >
       {Array.from({ length: 7 }).map((_, index) => (
         <motion.div
           key={`${side}-leaf-${index}`}
           className={`absolute ${
             isLeft ? "-left-12" : "-right-12"
-          } h-[128px] w-[68px] rounded-[80%_8%_80%_8%] bg-[linear-gradient(115deg,#103820_0%,#235c39_45%,#77965a_100%)] shadow-[inset_-12px_-8px_18px_rgba(0,0,0,.2),inset_10px_8px_15px_rgba(255,255,255,.12),0_14px_32px_rgba(0,0,0,.15)] ring-1 ring-[#d8bd7a]/25`}
+          } h-[120px] w-[64px] origin-center rounded-[82%_10%_82%_10%] bg-[radial-gradient(circle_at_70%_28%,rgba(238,236,157,.28)_0%,transparent_24%),linear-gradient(118deg,#173f27_0%,#2f6f3e_36%,#6f9a58_70%,#b3ac69_100%)] opacity-90 shadow-[inset_-14px_-10px_20px_rgba(14,39,22,.28),inset_12px_8px_16px_rgba(239,241,196,.16),0_14px_32px_rgba(33,22,12,.10)] ring-1 ring-[#d8bd7a]/16 sm:h-[128px] sm:w-[68px] lg:h-[148px] lg:w-[78px]`}
           style={{
             top: `${index * 14 + 2}%`,
-            transform: `rotate(${isLeft ? -42 : 42}deg)`,
+            transform: `rotate(${isLeft ? -42 : 42}deg) scale(${index % 2 ? 0.94 : 1})`,
           }}
           animate={{ rotate: isLeft ? [-43, -38, -43] : [43, 38, 43] }}
           transition={{
@@ -137,7 +150,22 @@ function SideBananaLeaves({ side }) {
             ease: "easeInOut",
           }}
         >
-          <div className="absolute left-1/2 top-3 h-[86%] w-[1px] -translate-x-1/2 rounded-full bg-[#ead294]/45" />
+          <div className="absolute left-1/2 top-3 h-[86%] w-[1px] -translate-x-1/2 rounded-full bg-[#e6d58e]/46" />
+          <div
+            className={`absolute left-1/2 top-8 h-[1px] w-8 origin-left bg-[#e6d58e]/20 ${
+              isLeft ? "-rotate-[28deg]" : "rotate-[28deg]"
+            }`}
+          />
+          <div
+            className={`absolute left-1/2 top-14 h-[1px] w-9 origin-left bg-[#e6d58e]/18 ${
+              isLeft ? "-rotate-[22deg]" : "rotate-[22deg]"
+            }`}
+          />
+          <div
+            className={`absolute left-1/2 top-20 h-[1px] w-8 origin-left bg-[#e6d58e]/16 ${
+              isLeft ? "-rotate-[18deg]" : "rotate-[18deg]"
+            }`}
+          />
         </motion.div>
       ))}
     </div>
@@ -145,52 +173,66 @@ function SideBananaLeaves({ side }) {
 }
 
 function HeroTemple() {
-  const { scrollYProgress } = useScroll();
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
 
-  const templeYRaw = useTransform(scrollYProgress, [0, 0.28], [90, -20]);
-  const templeScaleRaw = useTransform(scrollYProgress, [0, 0.28], [1.08, 1]);
+  const templeYRaw = useTransform(scrollYProgress, [0, 1], [42, -64]);
+  const templeScaleRaw = useTransform(scrollYProgress, [0, 1], [1.055, 0.985]);
 
   const templeY = useSpring(templeYRaw, {
-    stiffness: 70,
-    damping: 24,
-    mass: 0.4,
+    stiffness: 210,
+    damping: 30,
+    mass: 0.18,
   });
 
   const templeScale = useSpring(templeScaleRaw, {
-    stiffness: 70,
-    damping: 24,
-    mass: 0.4,
+    stiffness: 210,
+    damping: 30,
+    mass: 0.18,
   });
 
-  const titleY = useTransform(scrollYProgress, [0, 0.18], [0, -34]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -44]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.72], [1, 0.2]);
 
   return (
     <motion.section
+      ref={heroRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.1, ease: "easeOut" }}
-      className="relative z-30 min-h-[100svh] overflow-hidden"
+      className="relative z-30 min-h-[100svh] overflow-hidden lg:min-h-[860px]"
     >
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,#587b99_0%,#8da9bb_42%,#e9c79b_100%)]" />
-      <div className="absolute inset-0 opacity-45 bg-[radial-gradient(circle_at_35%_20%,rgba(255,255,255,.42),transparent_28%),radial-gradient(circle_at_70%_18%,rgba(255,217,166,.35),transparent_30%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,.05),transparent_34%,rgba(246,234,210,.9)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,#73b9e8_0%,#a6d4e8_46%,#ddd2b4_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_34%_18%,rgba(255,255,255,.38),transparent_28%),radial-gradient(circle_at_74%_17%,rgba(255,214,190,.2),transparent_26%),linear-gradient(180deg,rgba(58,125,169,.05)_0%,transparent_42%,rgba(245,237,217,.88)_100%)]" />
+      <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,.06)_1px,transparent_1px)] [background-size:44px_44px]" />
 
       <FloatingLanterns />
 
       <motion.div
-        style={{ y: titleY }}
-        className="relative z-40 px-7 pt-28 text-center text-white"
+        style={{ y: titleY, opacity: titleOpacity }}
+        className="relative z-40 mx-auto max-w-2xl px-7 pt-20 text-center text-white sm:pt-24 md:pt-28 lg:pt-20"
       >
-        <p className="text-[12px] uppercase tracking-[0.42em] drop-shadow-sm">
+        <div className="pointer-events-none absolute left-1/2 top-[54%] -z-10 h-[220px] w-[min(86vw,620px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(28,46,58,.2)_0%,rgba(28,46,58,.12)_38%,transparent_72%)] blur-xl lg:h-[250px] lg:w-[660px]" />
+
+        <p className="text-[11px] uppercase tracking-[0.42em] text-white drop-shadow-[0_2px_7px_rgba(42,53,64,.35)] sm:text-[12px]">
           Priyanka
         </p>
-        <p className="mt-2 text-[12px] uppercase tracking-[0.8em] drop-shadow-sm">
+
+        <p className="mt-2 text-[11px] uppercase tracking-[0.78em] text-white drop-shadow-[0_2px_7px_rgba(42,53,64,.35)] sm:text-[12px]">
           weds
         </p>
-        <h1 className="mt-3 text-[54px] font-light leading-none tracking-[0.02em] drop-shadow-md">
+
+        <h1
+          className="mt-2 text-[68px] font-normal leading-none text-white drop-shadow-[0_5px_18px_rgba(20,32,42,.46)] sm:text-[82px] md:text-[92px] lg:text-[104px]"
+          style={scriptFont}
+        >
           Praveen
         </h1>
-        <p className="mx-auto mt-5 max-w-[260px] text-[12px] leading-6 text-white/85">
+
+        <p className="mx-auto mt-5 max-w-[310px] text-[14px] font-semibold leading-7 text-white/95 drop-shadow-[0_3px_10px_rgba(18,29,38,.62)] sm:max-w-[380px] sm:text-[16px] lg:max-w-[520px] lg:text-[18px]">
           With the blessings of our families, we invite you to celebrate our
           sacred wedding ceremony.
         </p>
@@ -198,11 +240,11 @@ function HeroTemple() {
 
       <motion.div
         style={{ y: templeY, scale: templeScale }}
-        className="absolute inset-x-0 bottom-[8vh] z-30 mx-auto flex justify-center will-change-transform transform-gpu"
+        className="absolute inset-x-0 bottom-[-1vh] z-30 mx-auto flex justify-center will-change-transform transform-gpu lg:bottom-[-86px]"
       >
-        <div className="relative w-[128%] max-w-[620px] will-change-transform transform-gpu">
+        <div className="relative flex w-full justify-center will-change-transform transform-gpu">
           <motion.div
-            className="absolute left-1/2 top-[20%] h-56 w-56 -translate-x-1/2 rounded-full bg-[#ffe09c]/30 blur-3xl"
+            className="absolute left-1/2 top-[18%] h-64 w-64 -translate-x-1/2 rounded-full bg-[#f4cf96]/20 blur-3xl"
             animate={{
               opacity: [0.35, 0.6, 0.35],
               scale: [1, 1.05, 1],
@@ -217,14 +259,14 @@ function HeroTemple() {
           <img
             src={templeImage}
             alt="Premium South Indian temple gopuram"
-            className="relative z-10 h-auto w-full object-contain opacity-100 drop-shadow-[0_28px_45px_rgba(0,0,0,.35)] will-change-transform transform-gpu"
+            className="relative z-10 h-auto max-h-[61svh] w-[110vw] max-w-[520px] object-contain opacity-100 drop-shadow-[0_30px_48px_rgba(19,13,8,.38)] will-change-transform transform-gpu sm:max-h-[63svh] sm:max-w-[620px] md:max-h-[64svh] md:max-w-[720px] lg:w-[58vw] lg:max-h-[760px] lg:max-w-[840px] xl:max-w-[920px]"
             loading="eager"
             draggable={false}
           />
         </div>
       </motion.div>
 
-      <div className="absolute inset-x-0 bottom-0 z-30 h-36 bg-gradient-to-t from-[#f6ead2] via-[#f6ead2]/75 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 z-30 h-40 bg-gradient-to-t from-[#f5edd9] via-[#f2ead4]/74 to-transparent" />
     </motion.section>
   );
 }
@@ -232,47 +274,86 @@ function HeroTemple() {
 function Section({ children, className = "" }) {
   return (
     <motion.section
-      initial={{ opacity: 0, y: 35 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.75, ease: "easeOut" }}
-      className={`relative z-30 mx-5 my-6 rounded-[28px] border border-[#d8a94c]/45 bg-[#fff6df]/92 p-5 shadow-[0_24px_65px_rgba(40,17,8,.16)] backdrop-blur-md ${className}`}
+      className={`relative z-30 h-full overflow-hidden rounded-[18px] border border-[#d1ad5e]/45 bg-[linear-gradient(180deg,rgba(255,252,244,.95)_0%,rgba(247,238,214,.95)_100%)] p-5 shadow-[0_18px_45px_rgba(58,32,24,.11),inset_0_1px_0_rgba(255,255,255,.78)] backdrop-blur-md sm:p-6 md:p-8 ${className}`}
     >
-      <div className="pointer-events-none absolute inset-[8px] rounded-[22px] border border-[#8b1e12]/10" />
+      <div className="pointer-events-none absolute inset-[7px] rounded-[13px] border border-[#7d4d2d]/10" />
+      <div className="pointer-events-none absolute inset-x-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#d8ba6b]/70 to-transparent" />
+      <div className="pointer-events-none absolute left-4 top-4 h-5 w-5 border-l border-t border-[#c4a15b]/38" />
+      <div className="pointer-events-none absolute right-4 top-4 h-5 w-5 border-r border-t border-[#c4a15b]/38" />
+      <div className="pointer-events-none absolute bottom-4 left-4 h-5 w-5 border-b border-l border-[#c4a15b]/28" />
+      <div className="pointer-events-none absolute bottom-4 right-4 h-5 w-5 border-b border-r border-[#c4a15b]/28" />
       <div className="relative z-10">{children}</div>
     </motion.section>
   );
 }
 
+function SectionTitle({ children }) {
+  return (
+    <h2
+      className="text-center text-[24px] font-semibold uppercase leading-tight tracking-[0.08em] text-[#3f2219] sm:text-[28px] md:text-[32px]"
+      style={headingFont}
+    >
+      {children}
+    </h2>
+  );
+}
+
+function OrnamentalDivider({ className = "" }) {
+  return (
+    <div
+      className={`mx-auto flex w-full max-w-[260px] items-center justify-center gap-3 ${className}`}
+      aria-hidden="true"
+    >
+      <span className="h-px flex-1 bg-gradient-to-r from-transparent to-[#c4a15b]/70" />
+      <span className="h-2 w-2 rotate-45 rounded-[1px] border border-[#c4a15b]/75 bg-[#fff8e8]" />
+      <span className="h-px flex-1 bg-gradient-to-l from-transparent to-[#c4a15b]/70" />
+    </div>
+  );
+}
+
+function FloralBand() {
+  return (
+    <div className="relative z-30 mx-auto flex w-full max-w-6xl items-center justify-center px-6 pt-7">
+      <div className="flex w-full items-center justify-center gap-3">
+        <span className="h-px flex-1 bg-gradient-to-r from-transparent via-[#c4a15b]/60 to-[#c4a15b]/25" />
+        <span className="h-2.5 w-2.5 rotate-45 rounded-[2px] border border-[#b99145]/70 bg-[#fff8e8] shadow-[0_0_18px_rgba(196,161,91,.22)]" />
+        <span className="h-4 w-4 rotate-45 rounded-[3px] border border-[#b99145]/80 bg-[#f8edcf]" />
+        <span className="h-2.5 w-2.5 rotate-45 rounded-[2px] border border-[#b99145]/70 bg-[#fff8e8] shadow-[0_0_18px_rgba(196,161,91,.22)]" />
+        <span className="h-px flex-1 bg-gradient-to-l from-transparent via-[#c4a15b]/60 to-[#c4a15b]/25" />
+      </div>
+    </div>
+  );
+}
+
 function WeddingDetailsCard() {
   return (
-    <Section className="mt-6 text-center">
-      <div className="mb-3 flex justify-center gap-4 text-3xl">
-        <motion.span
-          animate={{ opacity: [0.75, 1, 0.75] }}
-          transition={{ duration: 1.6, repeat: Infinity }}
-        >
-          🪔
-        </motion.span>
-        <motion.span
-          animate={{ opacity: [1, 0.75, 1] }}
-          transition={{ duration: 1.8, repeat: Infinity }}
-        >
-          🪔
-        </motion.span>
+    <Section className="text-center lg:col-span-2">
+      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-[#d0ad60]/50 bg-[#fff9ea] text-[#9b7430] shadow-[0_10px_24px_rgba(77,43,21,.12)]">
+        <Sparkles size={20} />
       </div>
 
-      <p className="text-[11px] uppercase tracking-[0.35em] text-[#9c291a]">
+      <p className="text-[11px] uppercase tracking-[0.32em] text-[#8c692d]">
         Wedding Ceremony
       </p>
 
-      <h2 className="mt-3 text-3xl font-bold text-[#691208]">22 June 2026</h2>
+      <h2
+        className="mt-3 text-[29px] font-semibold uppercase tracking-[0.08em] text-[#3f2219] sm:text-[34px]"
+        style={headingFont}
+      >
+        22 June 2026
+      </h2>
 
-      <p className="mt-3 flex items-center justify-center gap-2 text-sm text-[#532214]">
+      <OrnamentalDivider className="my-5" />
+
+      <p className="mt-4 flex items-center justify-center gap-2 text-[15px] font-medium text-[#573728]">
         <Clock size={15} /> 02:32 AM Muhurtham
       </p>
 
-      <p className="mt-2 flex items-center justify-center gap-2 text-sm text-[#532214]">
+      <p className="mt-2 flex items-center justify-center gap-2 text-[15px] font-medium text-[#573728]">
         <MapPin size={15} /> S.V. Function Hall, Rajamahendravaram
       </p>
     </Section>
@@ -283,14 +364,15 @@ function BlessingsSection() {
   return (
     <Section>
       <div className="text-center">
-        <Sparkles className="mx-auto mb-3 text-[#9c291a]" size={24} />
-        <h2 className="text-2xl font-bold text-[#6d160d]">
-          With Divine Blessings
-        </h2>
-        <p className="mt-4 text-[14px] leading-7 text-[#62301b]">
-          With blessings from Gummadi Anand, Smt. Lokeswari, and our beloved
-          elders, we warmly invite you to grace this auspicious wedding ceremony
-          with your presence and blessings.
+        <Sparkles className="mx-auto mb-3 text-[#9b7430]" size={22} />
+
+        <SectionTitle>With Divine Blessings</SectionTitle>
+        <OrnamentalDivider className="mt-5" />
+
+        <p className="mx-auto mt-4 max-w-xl text-[16px] font-medium leading-8 text-[#573728] sm:text-[18px]">
+          With the blessings of Gummadi Anand, Smt. Lokeswari, and our beloved
+          elders, we request the honour of your presence as Priyanka and Praveen
+          begin their sacred journey together.
         </p>
       </div>
     </Section>
@@ -300,33 +382,40 @@ function BlessingsSection() {
 function EventsSection() {
   return (
     <Section>
-      <h2 className="mb-5 text-center text-2xl font-bold text-[#6d160d]">
-        Wedding Events
-      </h2>
+      <SectionTitle>Wedding Events</SectionTitle>
+      <OrnamentalDivider className="mt-5" />
 
-      <div className="space-y-4">
+      <div className="mt-6 space-y-3.5">
         {events.map((event, index) => (
           <motion.div
             key={event.title}
-            initial={{ opacity: 0, x: index % 2 ? 28 : -28 }}
+            initial={{ opacity: 0, x: index % 2 ? 18 : -18 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.65 }}
-            className="relative overflow-hidden rounded-2xl border border-[#d7a149]/45 bg-[#fffaf0]/75 p-4 shadow-[0_14px_28px_rgba(83,34,20,.14)]"
+            className="relative overflow-hidden rounded-[14px] border border-[#d8ba6b]/45 bg-[#fffaf0]/75 p-4 shadow-[0_12px_26px_rgba(61,34,22,.09),inset_0_1px_0_rgba(255,255,255,.68)]"
           >
-            <div className="absolute bottom-0 right-0 h-16 w-16 rounded-tl-full bg-[#8f1d13]/8" />
+            <div className="absolute inset-y-3 left-0 w-[3px] rounded-r-full bg-[#b99145]/70" />
+            <div className="absolute bottom-0 right-0 h-16 w-16 rounded-tl-full bg-[#b99145]/8" />
 
             <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[#8e1b12] to-[#4a0b08] text-2xl shadow-lg ring-2 ring-[#e5bd64]">
-                {event.icon}
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#d6b565]/60 bg-[#fff9ea] text-[#8b682e] shadow-[0_10px_22px_rgba(63,34,25,.10)]">
+                <event.Icon size={20} strokeWidth={1.8} />
               </div>
 
               <div className="text-left">
-                <h3 className="font-bold text-[#691208]">{event.title}</h3>
-                <p className="flex items-center gap-2 text-xs text-[#62301b]">
+                <h3
+                  className="text-[17px] font-semibold uppercase tracking-[0.08em] text-[#3f2219]"
+                  style={headingFont}
+                >
+                  {event.title}
+                </h3>
+
+                <p className="mt-1 flex items-center gap-2 text-[14px] font-medium text-[#573728]">
                   <CalendarDays size={13} /> {event.date}
                 </p>
-                <p className="flex items-center gap-2 text-xs text-[#62301b]">
+
+                <p className="mt-1 flex items-center gap-2 text-[14px] font-medium text-[#573728]">
                   <Clock size={13} /> {event.time}
                 </p>
               </div>
@@ -340,29 +429,27 @@ function EventsSection() {
 
 function CountdownSection() {
   return (
-    <Section className="overflow-hidden bg-[linear-gradient(180deg,#fff7e7_0%,#f6ead2_100%)] text-center shadow-[0_20px_50px_rgba(83,34,20,.10)]">
-      {/* Top Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,214,118,.18),transparent_42%)]" />
+    <Section className="overflow-hidden bg-[linear-gradient(180deg,#fffaf0_0%,#f3e8cc_100%)] px-6 py-8 text-center sm:px-8 sm:py-9 lg:col-span-2">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(214,181,101,.16),transparent_42%)]" />
+      <div className="absolute left-8 right-8 top-7 h-[1px] bg-gradient-to-r from-transparent via-[#c4a15b]/70 to-transparent  " />
 
-      {/* Decorative Top Border */}
-      <div className="absolute left-6 right-6 top-5 h-[1px] bg-gradient-to-r from-transparent via-[#ddb45a] to-transparent" />
-
-      <div className="relative z-10">
-        <p className="text-[11px] uppercase tracking-[0.38em] text-[#d09a2c]">
+      <div className="relative z-10 ">
+        <p className="mb-3 text-[11px] uppercase tracking-[0.36em] text-[#8c692d]">
           Countdown
         </p>
 
-        <h2 className="mt-3 text-3xl font-semibold leading-tight text-[#6d160d]">
-          The Auspicious Day
-          <br />
-          Awaits
+        <h2
+          className="mx-auto max-w-4xl text-center text-[22px] font-semibold uppercase leading-[1.25] tracking-[0.08em] text-[#3f2219] sm:text-[27px] md:text-[31px] lg:text-[32px]"
+          style={headingFont}
+        >
+          The Auspicious Day Awaits
         </h2>
 
-        <p className="mx-auto mt-3 max-w-[260px] text-xs leading-6 text-[#7a4d34]/70">
-          Counting the sacred moments until our forever begins.
+        <p className="mx-auto mt-5 max-w-[360px] text-[15px] font-medium leading-7 text-[#573728]/85 sm:text-[17px]">
+          Counting down to the blessed hour when two families gather as one.
         </p>
 
-        <div className="mt-7 grid grid-cols-4 gap-3">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-3">
           {countdownItems.map((item, index) => (
             <motion.div
               key={item.label}
@@ -373,17 +460,19 @@ function CountdownSection() {
                 delay: index * 0.15,
                 ease: "easeInOut",
               }}
-              className="relative overflow-hidden rounded-[22px] border border-[#e6c06b]/45 bg-[linear-gradient(180deg,#fff9ed_0%,#f8ecd3_100%)] px-2 py-5 shadow-[0_10px_25px_rgba(83,34,20,.10)]"
+              className="relative min-h-[86px] overflow-hidden rounded-[12px] border border-[#d8ba6b]/50 bg-[linear-gradient(180deg,#fffbf3_0%,#f3e8cc_100%)] px-1 py-4 shadow-[0_10px_22px_rgba(61,34,22,.09),inset_0_1px_0_rgba(255,255,255,.7)] sm:min-h-[96px] sm:px-2 sm:py-5"
             >
-              {/* Soft Gold Glow */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,214,118,.12),transparent_60%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(196,161,91,.11),transparent_60%)]" />
 
               <div className="relative z-10">
-                <div className="text-3xl font-bold tracking-wide text-[#d59b22]">
+                <div
+                  className="text-[24px] font-semibold tracking-wide text-[#7d5529] sm:text-3xl"
+                  style={headingFont}
+                >
                   {item.value}
                 </div>
 
-                <div className="mt-2 text-[10px] uppercase tracking-[0.28em] text-[#8a5a3d]/70">
+                <div className="mt-2 text-[9px] uppercase tracking-[0.18em] text-[#573728]/70 sm:text-[10px] sm:tracking-[0.24em]">
                   {item.label}
                 </div>
               </div>
@@ -397,64 +486,61 @@ function CountdownSection() {
 
 function VenueSection() {
   return (
-    <Section>
-      <h2 className="text-center text-2xl font-bold text-[#6d160d]">Venue</h2>
+    <Section className="lg:col-span-2">
+      <SectionTitle>Venue</SectionTitle>
+      <OrnamentalDivider className="mt-5" />
 
-      <div className="mt-4 rounded-3xl border border-[#d7a149]/50 bg-gradient-to-br from-[#fffaf0] to-[#f4d99d] p-4 text-center shadow-inner">
-        <MapPin className="mx-auto mb-2 text-[#8f1d13]" />
+      <div className="mt-6 grid gap-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch">
+        <div className="rounded-[14px] border border-[#d8ba6b]/50 bg-[linear-gradient(145deg,#fffaf0_0%,#efe0bd_100%)] p-5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.8),0_12px_26px_rgba(61,34,22,.08)] sm:p-6">
+          <MapPin className="mx-auto mb-3 text-[#8b682e]" size={22} />
 
-        <h3 className="font-bold text-[#691208]">S.V. Function Hall</h3>
+          <h3
+            className="text-[23px] font-semibold uppercase tracking-[0.08em] text-[#3f2219]"
+            style={headingFont}
+          >
+            S.V. Function Hall
+          </h3>
 
-        <p className="mt-1 text-xs text-[#62301b]">
-          J.N. Road, Rajamahendravaram
-        </p>
+          <p className="mx-auto mt-2 max-w-sm text-[15px] font-medium leading-7 text-[#573728]">
+            J.N. Road, Rajamahendravaram
+          </p>
 
-        <a
-          href={GOOGLE_MAPS_DIRECTIONS_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-4 inline-flex rounded-full bg-gradient-to-r from-[#7d170f] via-[#a92317] to-[#7d170f] px-5 py-2 text-sm font-bold text-[#fff4d8] shadow-lg ring-1 ring-[#e8bd63]/55"
-        >
-          Open Google Maps
-        </a>
+          <div className="mt-6 rounded-[12px] border border-[#d8ba6b]/45 bg-[#fff9ed]/75 p-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8c692d]">
+              Family Contact
+            </p>
 
-        <a
-          href={`tel:${FAMILY_CONTACT_NUMBER}`}
-          className="mx-auto mt-3 flex items-center justify-center gap-2 text-sm text-[#62301b]"
-        >
-          <Phone size={15} /> {FAMILY_CONTACT_NUMBER}
-        </a>
-      </div>
-    </Section>
-  );
-}
+            <a
+              href={`tel:${FAMILY_CONTACT_NUMBER}`}
+              className="mx-auto mt-3 inline-flex items-center justify-center gap-2 text-[17px] font-semibold text-[#3f2219] transition-colors hover:text-[#7d5529]"
+            >
+              <Phone size={16} /> {FAMILY_CONTACT_NUMBER}
+            </a>
 
-function LocationMapSection() {
-  return (
-    <Section>
-      <h2 className="text-center text-2xl font-bold text-[#6d160d]">
-        Venue Location
-      </h2>
+            <p className="mx-auto mt-2 max-w-xs text-[13px] leading-6 text-[#573728]/78">
+              For directions, arrival help, or any wedding-day assistance.
+            </p>
+          </div>
 
-      <div className="mt-5 overflow-hidden rounded-3xl border border-[#d7a149]/45">
-        <iframe
-          title="Wedding Venue Map"
-          src={GOOGLE_MAPS_EMBED_URL}
-          className="h-[300px] w-full border-0"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-      </div>
+          <a
+            href={GOOGLE_MAPS_DIRECTIONS_URL}
+            target="_blank"
+            rel="noreferrer"
+            className={`mt-5 ${primaryButton}`}
+          >
+            Get Directions
+          </a>
+        </div>
 
-      <div className="mt-4 flex justify-center">
-        <a
-          href={GOOGLE_MAPS_DIRECTIONS_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="rounded-full bg-gradient-to-r from-[#7d170f] via-[#a92317] to-[#7d170f] px-5 py-2 text-sm font-bold text-[#fff4d8]"
-        >
-          Get Directions
-        </a>
+        <div className="overflow-hidden rounded-[14px] border border-[#d8ba6b]/45 shadow-[0_16px_34px_rgba(61,34,22,.11)]">
+          <iframe
+            title="Wedding Venue Map"
+            src={GOOGLE_MAPS_EMBED_URL}
+            className="h-[300px] w-full border-0 sm:h-[360px] lg:h-full lg:min-h-[390px]"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
       </div>
     </Section>
   );
@@ -462,15 +548,15 @@ function LocationMapSection() {
 
 function RsvpSection() {
   return (
-    <Section className="text-center">
-      <Heart className="mx-auto mb-2 text-[#9c291a]" />
+    <Section className="text-center lg:col-span-2">
+      <Heart className="mx-auto mb-3 text-[#8b682e]" />
 
-      <h2 className="text-2xl font-bold text-[#6d160d]">
-        Grace Us With Your Presence
-      </h2>
+      <SectionTitle>Grace Us With Your Presence</SectionTitle>
+      <OrnamentalDivider className="mt-5" />
 
-      <p className="mt-3 text-sm leading-7 text-[#62301b]">
-        Your love, presence, and blessings mean the world to us.
+      <p className="mx-auto mt-4 max-w-xl text-[16px] font-medium leading-8 text-[#573728] sm:text-[18px]">
+        Your presence will make our celebration complete, and your blessings
+        will be treasured always.
       </p>
 
       <motion.a
@@ -479,7 +565,7 @@ function RsvpSection() {
         rel="noreferrer"
         whileTap={{ scale: 0.96 }}
         whileHover={{ scale: 1.03 }}
-        className="mt-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#0f5b31] to-[#06351d] px-6 py-3 text-sm font-bold text-white shadow-xl ring-1 ring-[#e8bd63]/40"
+        className={`mt-6 ${greenButton}`}
       >
         <MessageCircle size={18} /> RSVP on WhatsApp
       </motion.a>
@@ -489,29 +575,33 @@ function RsvpSection() {
 
 export default function WeddingInvitation() {
   return (
-    <div className="min-h-screen bg-[#f7f0df] font-serif text-[#4c160b]">
+    <div className="min-h-screen bg-[#e8dfca] text-[#3f2219]" style={bodyFont}>
       <style>{`
         .royal-bg {
-          background: linear-gradient(180deg, #f6ead2 0%, #f3e3c1 100%);
+          background:
+            radial-gradient(circle at 50% 0%, rgba(255, 248, 226, .86) 0%, transparent 34%),
+            linear-gradient(180deg, #f5edd9 0%, #efe2c4 42%, #eadbb7 100%);
         }
       `}</style>
 
-      <main className="royal-bg relative mx-auto min-h-screen max-w-md overflow-hidden pb-10 shadow-[0_0_80px_rgba(0,0,0,.10)]">
+      <main className="royal-bg relative min-h-screen w-full overflow-hidden pb-10 shadow-[0_0_90px_rgba(43,28,19,.16)]">
         <SideBananaLeaves side="left" />
         <SideBananaLeaves side="right" />
         <Petals />
 
         <HeroTemple />
-        <WeddingDetailsCard />
-        <BlessingsSection />
-        <EventsSection />
-        <CountdownSection />
-        <VenueSection />
-        <LocationMapSection />
-        <RsvpSection />
+        <FloralBand />
+        <div className="relative z-30 mx-auto grid w-full max-w-6xl grid-cols-1 gap-5 px-4 py-7 sm:px-6 md:gap-6 lg:grid-cols-2 lg:px-10">
+          <WeddingDetailsCard />
+          <BlessingsSection />
+          <EventsSection />
+          <CountdownSection />
+          <VenueSection />
+          <RsvpSection />
+        </div>
 
-        <div className="relative z-30 px-8 pb-8 text-center text-xs text-[#6b2b16]/75">
-          Made by Praveen
+        <div className="relative z-30 px-8 pb-8 text-center text-[12px] uppercase tracking-[0.18em] text-[#6b4a2e]/70">
+          With love, Praveen & Priyanka
         </div>
       </main>
     </div>
