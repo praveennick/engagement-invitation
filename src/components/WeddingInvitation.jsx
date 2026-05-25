@@ -296,16 +296,16 @@ function HeroTemple() {
       >
         <div className="pointer-events-none absolute left-1/2 top-[54%] -z-10 h-[220px] w-[min(86vw,620px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(28,46,58,.2)_0%,rgba(28,46,58,.12)_38%,transparent_72%)] blur-xl lg:h-[250px] lg:w-[660px]" />
 
-        <p className="text-[11px] uppercase tracking-[0.42em] text-white drop-shadow-[0_2px_7px_rgba(42,53,64,.35)] sm:text-[12px]">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.46em] text-[#fffdf7] drop-shadow-[0_2px_8px_rgba(28,43,54,.42)] sm:text-[12px]">
           Priyanka
         </p>
 
-        <p className="mt-2 text-[11px] uppercase tracking-[0.78em] text-white drop-shadow-[0_2px_7px_rgba(42,53,64,.35)] sm:text-[12px]">
+        <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.8em] text-[#fffdf7] drop-shadow-[0_2px_8px_rgba(28,43,54,.42)] sm:text-[12px]">
           weds
         </p>
 
         <h1
-          className="mt-2 text-[68px] font-normal leading-none text-white drop-shadow-[0_5px_18px_rgba(20,32,42,.46)] sm:text-[82px] md:text-[92px] lg:text-[104px]"
+          className="mt-2 text-[72px] font-normal leading-none text-white drop-shadow-[0_8px_24px_rgba(24,35,44,.52),0_0_20px_rgba(255,255,255,.22)] sm:text-[88px] md:text-[98px] lg:text-[112px]"
           style={scriptFont}
         >
           Praveen
@@ -470,9 +470,7 @@ function WeddingDetailsCard() {
             } to calendar`}
           >
             <CalendarPlus size={15} />{" "}
-            {event.fileName.includes("dinner")
-              ? "Add Dinner"
-              : "Add Muhurtham"}
+            {event.fileName.includes("dinner") ? "Add Dinner" : "Add Muhurtham"}
           </a>
         ))}
       </div>
