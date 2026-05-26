@@ -494,9 +494,9 @@ function BlessingsSection() {
         <OrnamentalDivider className="mt-5" />
 
         <p className="mx-auto mt-4 max-w-xl text-[16px] font-medium leading-8 text-[#573728] sm:text-[18px]">
-          With the blessings of Gummadi Anand, Smt. Lokeswari, and our beloved
-          elders, we request the honour of your presence as Priyanka and Praveen
-          begin their sacred journey together.
+          With the blessings of Kosuri Chinnarao, Smt. Krishna Veni, and our
+          beloved elders, we request the honour of your presence as Priyanka
+          and Praveen begin their sacred journey together.
         </p>
 
         <p className="mx-auto mt-4 max-w-md text-[14px] font-medium italic leading-7 text-[#8c692d]">
