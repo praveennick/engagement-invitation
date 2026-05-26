@@ -19,9 +19,12 @@ const GOOGLE_MAPS_EMBED_URL =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4525.768375667284!2d81.804959!3d17.006156300000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a37a3bf6658436f%3A0x9f226cd13ee3e272!2sS%20V%20Function%20Hall!5e1!3m2!1sen!2sin!4v1779564738906!5m2!1sen!2sin";
 
 const WHATSAPP_RSVP_URL =
-  "https://wa.me/918142721111?text=Hi%20Praveen%2C%20We%20are%20happy%20to%20join%20Priyanka%20%26%20Praveen's%20wedding%20celebration.%20Looking%20forward%20to%20being%20there%20and%20blessing%20the%20couple.";
+  "https://wa.me/919052166382?text=Hi%20Priyanka%2C%20We%20are%20happy%20to%20join%20Priyanka%20%26%20Praveen's%20wedding%20celebration.%20Looking%20forward%20to%20being%20there%20and%20blessing%20the%20couple.";
 
-const FAMILY_CONTACT_NUMBER = "+919392015858";
+const FAMILY_CONTACT_NUMBERS = [
+  { display: "+91 99597 77911", href: "+919959777911" },
+  { display: "+91 90521 66382", href: "+919052166382" },
+];
 const MUHURTHAM_DATE = new Date("2026-06-22T02:32:00+05:30");
 
 const headingFont = {
@@ -495,8 +498,8 @@ function BlessingsSection() {
 
         <p className="mx-auto mt-4 max-w-xl text-[16px] font-medium leading-8 text-[#573728] sm:text-[18px]">
           With the blessings of Kosuri Chinnarao, Smt. Krishna Veni, and our
-          beloved elders, we request the honour of your presence as Priyanka
-          and Praveen begin their sacred journey together.
+          beloved elders, we request the honour of your presence as Priyanka and
+          Praveen begin their sacred journey together.
         </p>
 
         <p className="mx-auto mt-4 max-w-md text-[14px] font-medium italic leading-7 text-[#8c692d]">
@@ -649,13 +652,18 @@ function VenueSection() {
               Family Contact
             </p>
 
-            <a
-              href={`tel:${FAMILY_CONTACT_NUMBER}`}
-              className="mx-auto mt-3 inline-flex items-center justify-center gap-2 text-[17px] font-semibold text-[#3f2219] transition-colors hover:text-[#7d5529]"
-              aria-label={`Call family contact ${FAMILY_CONTACT_NUMBER}`}
-            >
-              <Phone size={16} /> {FAMILY_CONTACT_NUMBER}
-            </a>
+            <div className="mt-3 flex flex-col items-center gap-2">
+              {FAMILY_CONTACT_NUMBERS.map((contactNumber) => (
+                <a
+                  key={contactNumber.href}
+                  href={`tel:${contactNumber.href}`}
+                  className="inline-flex items-center justify-center gap-2 text-[17px] font-semibold text-[#3f2219] transition-colors hover:text-[#7d5529]"
+                  aria-label={`Call family contact ${contactNumber.display}`}
+                >
+                  <Phone size={16} /> {contactNumber.display}
+                </a>
+              ))}
+            </div>
 
             <p className="mx-auto mt-2 max-w-xs text-[13px] leading-6 text-[#573728]/78">
               For directions, arrival help, or any wedding-day assistance.
