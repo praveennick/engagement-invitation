@@ -19,7 +19,7 @@ const GOOGLE_MAPS_EMBED_URL =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4525.768375667284!2d81.804959!3d17.006156300000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a37a3bf6658436f%3A0x9f226cd13ee3e272!2sS%20V%20Function%20Hall!5e1!3m2!1sen!2sin!4v1779564738906!5m2!1sen!2sin";
 
 const WHATSAPP_RSVP_URL =
-  "https://wa.me/918142721111?text=Hi%20Praveen%2C%20We%20are%20happy%20to%20join%20Priyanka%20%26%20Praveen's%20wedding%20celebration.%20Looking%20forward%20to%20being%20there%20and%20blessing%20the%20couple.";
+  "https://wa.me/918142721111?text=Hi%20Praveen%2C%20We%20are%20happy%20to%20join%20Praveen%20%26%20Priyanka's%20wedding%20celebration.%20Looking%20forward%20to%20being%20there%20and%20blessing%20the%20couple.";
 
 const FAMILY_CONTACT_NUMBER = "+919392015858";
 const MUHURTHAM_DATE = new Date("2026-06-22T02:32:00+05:30");
@@ -59,20 +59,20 @@ const events = [
 
 const calendarEvents = [
   {
-    title: "Priyanka & Praveen Wedding Dinner",
-    fileName: "priyanka-praveen-dinner.ics",
+    title: "Praveen & Priyanka Wedding Dinner",
+    fileName: "praveen-priyanka-dinner.ics",
     start: "20260621T190000",
     end: "20260621T223000",
     description:
-      "Wedding dinner for Priyanka and Praveen at S.V. Function Hall.",
+      "Wedding dinner for Praveen and Priyanka at S.V. Function Hall.",
   },
   {
-    title: "Priyanka & Praveen Wedding Muhurtham",
-    fileName: "priyanka-praveen-muhurtham.ics",
+    title: "Praveen & Priyanka Wedding Muhurtham",
+    fileName: "praveen-priyanka-muhurtham.ics",
     start: "20260622T023200",
     end: "20260622T043000",
     description:
-      "Wedding muhurtham for Priyanka and Praveen, early hours of 22 June.",
+      "Wedding muhurtham for Praveen and Priyanka, early hours of 22 June.",
   },
 ];
 
@@ -88,10 +88,10 @@ function buildCalendarHref(event) {
   const calendarText = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Priyanka Praveen Wedding//Invitation//EN",
+    "PRODID:-//Praveen Priyanka Wedding//Invitation//EN",
     "CALSCALE:GREGORIAN",
     "BEGIN:VEVENT",
-    `UID:${event.fileName}@priyanka-praveen-wedding`,
+    `UID:${event.fileName}@praveen-priyanka-wedding`,
     `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").split(".")[0]}Z`,
     `DTSTART;TZID=Asia/Kolkata:${event.start}`,
     `DTEND;TZID=Asia/Kolkata:${event.end}`,
@@ -302,11 +302,11 @@ function HeroTemple() {
       >
         <div className="pointer-events-none absolute left-1/2 top-[54%] -z-10 h-[220px] w-[min(86vw,620px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(28,46,58,.2)_0%,rgba(28,46,58,.12)_38%,transparent_72%)] blur-xl lg:h-[250px] lg:w-[660px]" />
 
-        <p className="text-[11px] font-semibold uppercase tracking-[0.46em] text-[#fffdf7] drop-shadow-[0_2px_8px_rgba(28,43,54,.42)] sm:text-[12px]">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.46em] text-white drop-shadow-[0_2px_8px_rgba(28,43,54,.42)] sm:text-[12px]">
           Priyanka
         </p>
 
-        <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.8em] text-[#fffdf7] drop-shadow-[0_2px_8px_rgba(28,43,54,.42)] sm:text-[12px]">
+        <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.8em] text-white drop-shadow-[0_2px_8px_rgba(28,43,54,.42)] sm:text-[12px]">
           weds
         </p>
 
@@ -495,7 +495,7 @@ function BlessingsSection() {
 
         <p className="mx-auto mt-4 max-w-xl text-[16px] font-medium leading-8 text-[#573728] sm:text-[18px]">
           With the blessings of Gummadi Anand, Smt. Lokeswari, and our beloved
-          elders, we request the honour of your presence as Priyanka and Praveen
+          elders, we request the honour of your presence as Praveen and Priyanka
           begin their sacred journey together.
         </p>
 
@@ -696,8 +696,8 @@ function ShareInvitationButton() {
 
   const handleShare = async () => {
     const shareData = {
-      title: "Priyanka & Praveen Wedding",
-      text: "Join us for Priyanka and Praveen's wedding celebration.",
+      title: "Praveen & Priyanka Wedding",
+      text: "Join us for Praveen and Priyanka's wedding celebration.",
       url: window.location.href,
     };
 
