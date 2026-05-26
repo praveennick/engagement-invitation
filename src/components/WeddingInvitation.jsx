@@ -177,24 +177,30 @@ function FloatingLanterns() {
 function Petals() {
   return (
     <div
-      className="pointer-events-none absolute inset-0 z-20 overflow-hidden opacity-50"
+      className="pointer-events-none absolute inset-0 z-50 overflow-hidden opacity-80"
       aria-hidden="true"
     >
-      {Array.from({ length: 12 }).map((_, index) => (
+      {Array.from({ length: 20 }).map((_, index) => (
         <motion.span
           key={`petal-${index}`}
-          className="absolute h-1.5 w-1.5 rotate-45 rounded-[1px] bg-[#c59a46]/55 text-[0px] text-transparent shadow-[0_0_12px_rgba(197,154,70,.28)]"
-          initial={{ y: -80, x: `${(index * 19) % 100}%`, rotate: 0 }}
+          className="absolute h-3 w-2 rounded-[70%_10%_70%_10%] bg-[linear-gradient(135deg,rgba(255,202,209,.86)_0%,rgba(230,147,162,.72)_48%,rgba(196,149,70,.48)_100%)] shadow-[0_2px_8px_rgba(155,83,82,.18)]"
+          initial={{ y: -80, x: 0, rotate: 0, opacity: 0 }}
           animate={{
-            y: 1400,
-            x: `${((index * 19) % 100) + (index % 2 ? 7 : -7)}%`,
-            rotate: 220,
+            y: 1600,
+            x: index % 2 ? [0, 36, -18, 28] : [0, -34, 16, -26],
+            rotate: index % 2 ? 280 : -240,
+            opacity: [0, 0.85, 0.7, 0],
           }}
           transition={{
-            duration: 18 + (index % 7),
+            duration: 15 + (index % 8),
             repeat: Infinity,
-            delay: index * 0.6,
+            delay: index * 0.45,
             ease: "linear",
+          }}
+          style={{
+            left: `${(index * 37 + 9) % 100}%`,
+            width: 7 + (index % 4),
+            height: 11 + (index % 5),
           }}
         />
       ))}
@@ -284,7 +290,7 @@ function HeroTemple() {
       transition={{ duration: 1.1, ease: "easeOut" }}
       className="relative z-30 min-h-[100svh] overflow-hidden lg:min-h-[860px]"
     >
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,#73b9e8_0%,#a6d4e8_46%,#ddd2b4_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,#3ba7ee_0%,#71bddd_46%,#e4e3e2_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_34%_18%,rgba(255,255,255,.38),transparent_28%),radial-gradient(circle_at_74%_17%,rgba(255,214,190,.2),transparent_26%),linear-gradient(180deg,rgba(58,125,169,.05)_0%,transparent_42%,rgba(245,237,217,.88)_100%)]" />
       <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,.06)_1px,transparent_1px)] [background-size:44px_44px]" />
 
