@@ -74,7 +74,7 @@ const events = [
 const calendarEvents = [
   {
     title: "Praveen & Priyanka Wedding Dinner",
-    fileName: "praveen-priyanka-dinner.ics",
+    type: "dinner",
     start: "20260621T190000",
     end: "20260621T223000",
     description:
@@ -82,7 +82,7 @@ const calendarEvents = [
   },
   {
     title: "Praveen & Priyanka Wedding Muhurtham",
-    fileName: "praveen-priyanka-muhurtham.ics",
+    type: "muhurtham",
     start: "20260622T023200",
     end: "20260622T043000",
     description:
@@ -98,25 +98,17 @@ const lanterns = [
   { left: "45%", top: "12%", size: 30, delay: 1.4 },
 ];
 
-function buildCalendarHref(event) {
-  const calendarText = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//Praveen Priyanka Wedding//Invitation//EN",
-    "CALSCALE:GREGORIAN",
-    "BEGIN:VEVENT",
-    `UID:${event.fileName}@praveen-priyanka-wedding`,
-    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").split(".")[0]}Z`,
-    `DTSTART;TZID=Asia/Kolkata:${event.start}`,
-    `DTEND;TZID=Asia/Kolkata:${event.end}`,
-    `SUMMARY:${event.title}`,
-    "LOCATION:S.V. Function Hall, J.N. Road, Rajamahendravaram",
-    `DESCRIPTION:${event.description}`,
-    "END:VEVENT",
-    "END:VCALENDAR",
-  ].join("\r\n");
+function buildGoogleCalendarHref(event) {
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: event.title,
+    dates: `${event.start}/${event.end}`,
+    ctz: "Asia/Kolkata",
+    location: "S.V. Function Hall, J.N. Road, Rajamahendravaram",
+    details: `${event.description}\n\nInvitation: ${INVITATION_URL}`,
+  });
 
-  return `data:text/calendar;charset=utf-8,${encodeURIComponent(calendarText)}`;
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
 function getCountdownItems() {
@@ -481,16 +473,15 @@ function WeddingDetailsCard() {
       <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
         {calendarEvents.map((event) => (
           <a
-            key={event.fileName}
-            href={buildCalendarHref(event)}
-            download={event.fileName}
+            key={event.type}
+            href={buildGoogleCalendarHref(event)}
+            target="_blank"
+            rel="noreferrer"
             className={subtleButton}
-            aria-label={`Add ${
-              event.fileName.includes("dinner") ? "dinner" : "muhurtham"
-            } to calendar`}
+            aria-label={`Add ${event.type} to Google Calendar`}
           >
             <CalendarPlus size={15} />{" "}
-            {event.fileName.includes("dinner") ? "Add Dinner" : "Add Muhurtham"}
+            {event.type === "dinner" ? "Add Dinner" : "Add Muhurtham"}
           </a>
         ))}
       </div>
