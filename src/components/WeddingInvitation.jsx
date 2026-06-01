@@ -26,6 +26,20 @@ const FAMILY_CONTACT_NUMBERS = [
   { display: "+91 90521 66382", href: "+919052166382" },
 ];
 const MUHURTHAM_DATE = new Date("2026-06-22T02:32:00+05:30");
+const INVITATION_URL = "https://priyanka-praveen.vercel.app/";
+const SHARE_INVITATION_MESSAGE = `🌸 Wedding Invitation 🌸
+
+Together with our families, we are delighted to invite you to the wedding celebration of
+
+💕 Priyanka & Praveen
+
+📅 21st June 2026
+🕖 Dinner – 7:00 PM onwards
+📍 Rajamahendravaram
+
+✨ Tap the link below to open our wedding invitation website with all event & venue details ✨
+
+${INVITATION_URL}`;
 
 const headingFont = {
   fontFamily: "'Cinzel', serif",
@@ -704,9 +718,8 @@ function ShareInvitationButton() {
 
   const handleShare = async () => {
     const shareData = {
-      title: "Priyanka & Praveen Wedding",
-      text: "Join us for Priyanka and Praveen's wedding celebration.",
-      url: window.location.href,
+      title: "Wedding Invitation",
+      text: SHARE_INVITATION_MESSAGE,
     };
 
     try {
@@ -716,8 +729,8 @@ function ShareInvitationButton() {
         return;
       }
 
-      await navigator.clipboard.writeText(window.location.href);
-      setStatus("Invitation link copied");
+      await navigator.clipboard.writeText(SHARE_INVITATION_MESSAGE);
+      setStatus("Invitation message copied");
     } catch (error) {
       if (error?.name !== "AbortError") {
         setStatus("Share from your browser menu");
