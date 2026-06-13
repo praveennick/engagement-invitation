@@ -13,6 +13,7 @@ import {
   Share2,
 } from "lucide-react";
 import templeImage from "../assets/temple.png";
+import chinnaRaoImage from "../assets/chinna-rao.png";
 
 const GOOGLE_MAPS_DIRECTIONS_URL = "https://maps.app.goo.gl/8mYnpjN4gE95Hyu17";
 const GOOGLE_MAPS_EMBED_URL =
@@ -495,21 +496,56 @@ function WeddingDetailsCard() {
 function BlessingsSection() {
   return (
     <Section>
-      <div className="text-center">
-        <Sparkles className="mx-auto mb-3 text-[#9b7430]" size={22} />
+      <div className="grid gap-6 text-center md:grid-cols-[0.9fr_1.1fr] md:items-center md:text-left">
+        <motion.figure
+          initial={{ opacity: 0, scale: 0.96 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.75, ease: "easeOut" }}
+          className="mx-auto w-full max-w-[260px] overflow-hidden rounded-[16px] border border-[#d4b363]/65 bg-[#fff9ed] p-2 shadow-[0_16px_34px_rgba(61,34,22,.13),inset_0_1px_0_rgba(255,255,255,.78)] sm:max-w-[300px]"
+        >
+          <div className="overflow-hidden rounded-[12px] bg-[#eadbb7]">
+            <img
+              src={chinnaRaoImage}
+              alt="Kosuri Chinna Rao, father of the bride"
+              className="aspect-[4/5] w-full object-cover object-[50%_28%]"
+              width="1024"
+              height="1536"
+              loading="lazy"
+              decoding="async"
+              draggable={false}
+            />
+          </div>
 
-        <SectionTitle>With Divine Blessings</SectionTitle>
-        <OrnamentalDivider className="mt-5" />
+          <figcaption className="px-3 py-4 text-center">
+            <p
+              className="text-[18px] font-semibold uppercase tracking-[0.08em] text-[#3f2219]"
+              style={headingFont}
+            >
+              Kosuri Chinna Rao
+            </p>
+            <p className="mt-1 text-[12px] font-semibold uppercase tracking-[0.18em] text-[#8c692d]">
+              Warmly Invites You
+            </p>
+          </figcaption>
+        </motion.figure>
 
-        <p className="mx-auto mt-4 max-w-xl text-[16px] font-medium leading-8 text-[#573728] sm:text-[18px]">
-          With the blessings of Kosuri Chinnarao, Smt. Krishna Veni, and our
-          beloved elders, we request the honour of your presence as Priyanka and
-          Praveen begin their sacred journey together.
-        </p>
+        <div>
+          <Sparkles className="mx-auto mb-3 text-[#9b7430] md:mx-0" size={22} />
 
-        <p className="mx-auto mt-4 max-w-md text-[14px] font-medium italic leading-7 text-[#8c692d]">
-          May auspiciousness, joy, and togetherness bless this celebration.
-        </p>
+          <SectionTitle>With Divine Blessings</SectionTitle>
+          <OrnamentalDivider className="mt-5 md:mx-0" />
+
+          <p className="mx-auto mt-4 max-w-xl text-[16px] font-medium leading-8 text-[#573728] sm:text-[18px] md:mx-0">
+            With the blessings of Kosuri Chinna Rao, Smt. Krishna Veni, and our
+            beloved elders, we request the honour of your presence as Priyanka
+            and Praveen begin their sacred journey together.
+          </p>
+
+          <p className="mx-auto mt-4 max-w-md text-[14px] font-medium italic leading-7 text-[#8c692d] md:mx-0">
+            This invitation is lovingly shared by Chinna Rao and family.
+          </p>
+        </div>
       </div>
     </Section>
   );
