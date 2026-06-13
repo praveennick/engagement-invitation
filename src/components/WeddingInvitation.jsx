@@ -27,7 +27,7 @@ const FAMILY_CONTACT_NUMBERS = [
   { display: "+91 90521 66382", href: "+919052166382" },
 ];
 const MUHURTHAM_DATE = new Date("2026-06-22T02:32:00+05:30");
-const INVITATION_URL = "https://priyanka-praveen.vercel.app/";
+const INVITATION_URL = "https://priyanka-weds-praveen.vercel.app/";
 const SHARE_INVITATION_MESSAGE = `🌸 Wedding Invitation 🌸
 
 Together with our families, we are delighted to invite you to the wedding celebration of
