@@ -807,7 +807,7 @@ export default function WeddingInvitation() {
         </div>
 
         <div className="relative z-30 px-8 pb-8 text-center text-[12px] uppercase tracking-[0.18em] text-[#6b4a2e]/70">
-          Made by Praveen❤️
+          Made by Praveen ❤️
         </div>
       </main>
     </div>
