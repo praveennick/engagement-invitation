@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import {
+  motion as Motion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import {
   CalendarDays,
   Clock,
@@ -14,25 +19,27 @@ import {
 } from "lucide-react";
 import templeImage from "../assets/temple.png";
 
-const GOOGLE_MAPS_DIRECTIONS_URL = "https://maps.app.goo.gl/8mYnpjN4gE95Hyu17";
+const GOOGLE_MAPS_DIRECTIONS_URL = "https://maps.app.goo.gl/zGWRU52bP1cP8WjU9";
 const GOOGLE_MAPS_EMBED_URL =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4525.768375667284!2d81.804959!3d17.006156300000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a37a3bf6658436f%3A0x9f226cd13ee3e272!2sS%20V%20Function%20Hall!5e1!3m2!1sen!2sin!4v1779564738906!5m2!1sen!2sin";
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3811.0776352646703!2d80.1559657!3d17.2150227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a34576d3afbd01b%3A0x6e3254ce1d3bd615!2sLakshmi%20Gardens!5e0!3m2!1sen!2sin!4v1782813616496!5m2!1sen!2sin";
 
 const WHATSAPP_RSVP_URL =
-  "https://wa.me/918142721111?text=Hi%20Praveen%2C%20We%20are%20happy%20to%20join%20Praveen%20%26%20Priyanka's%20wedding%20celebration.%20Looking%20forward%20to%20being%20there%20and%20blessing%20the%20couple.";
+  "https://wa.me/919000396401?text=Hi%2C%20we%20are%20happy%20to%20join%20Shiva%20Ganesh%20%26%20Mythili's%20wedding%20celebration.%20Looking%20forward%20to%20being%20there%20and%20blessing%20the%20couple.";
 
-const FAMILY_CONTACT_NUMBER = "+919392015858";
-const MUHURTHAM_DATE = new Date("2026-06-22T02:32:00+05:30");
-const INVITATION_URL = "https://praveen-weds-priyanka.vercel.app/?v1";
+const FAMILY_CONTACT_NUMBER = "+919000396401";
+const SECONDARY_CONTACT_NUMBER = "+917794019401";
+const MUHURTHAM_DATE = new Date("2026-07-02T20:28:00+05:30");
+const INVITATION_URL = window.location.href;
 const SHARE_INVITATION_MESSAGE = `🌸 Wedding Invitation 🌸
 
 We warmly invite you and your family to celebrate the wedding of
 
-💕 Praveen & Priyanka
+💕 Shiva Ganesh & Mythili
 
-📅 21st June 2026
-🕖 Dinner – 7:00 PM onwards
-📍 Rajamahendravaram
+📅 2nd July 2026
+🕖 Dinner - 7:30 PM onwards
+🕰️ Muhurtham - 8:28 PM
+📍 Sri Lakshmi Gardens, Bonakal Road, Khammam
 
 ✨ Tap the link below to open our wedding invitation website with all event & venue details ✨
 
@@ -59,34 +66,34 @@ const subtleButton =
 const events = [
   {
     title: "Dinner",
-    date: "21st June 2026",
-    time: "07:00 PM onwards",
+    date: "2nd July 2026",
+    time: "07:30 PM onwards",
     Icon: UtensilsCrossed,
   },
   {
     title: "Wedding Muhurtham",
-    date: "Early hours of 22nd June 2026",
-    time: "02:32 AM",
+    date: "2nd July 2026",
+    time: "08:28 PM",
     Icon: Sparkles,
   },
 ];
 
 const calendarEvents = [
   {
-    title: "Praveen & Priyanka Wedding Dinner",
+    title: "Shiva Ganesh & Mythili Wedding Dinner",
     type: "dinner",
-    start: "20260621T190000",
-    end: "20260621T223000",
+    start: "20260702T193000",
+    end: "20260702T203000",
     description:
-      "Wedding dinner for Praveen and Priyanka at S.V. Function Hall.",
+      "Wedding dinner for Shiva Ganesh and Mythili at Sri Lakshmi Gardens.",
   },
   {
-    title: "Praveen & Priyanka Wedding Muhurtham",
+    title: "Shiva Ganesh & Mythili Wedding Muhurtham",
     type: "muhurtham",
-    start: "20260622T023200",
-    end: "20260622T043000",
+    start: "20260702T202800",
+    end: "20260702T213000",
     description:
-      "Wedding muhurtham for Praveen and Priyanka, early hours of 22 June.",
+      "Wedding muhurtham for Shiva Ganesh and Mythili on 2 July 2026.",
   },
 ];
 
@@ -104,7 +111,7 @@ function buildGoogleCalendarHref(event) {
     text: event.title,
     dates: `${event.start}/${event.end}`,
     ctz: "Asia/Kolkata",
-    location: "S.V. Function Hall, J.N. Road, Rajamahendravaram",
+    location: "Sri Lakshmi Gardens, Bonakal Road, Khammam",
     details: `${event.description}\n\nInvitation: ${INVITATION_URL}`,
   });
 
@@ -154,7 +161,7 @@ function FloatingLanterns() {
       aria-hidden="true"
     >
       {lanterns.map((lantern, index) => (
-        <motion.div
+        <Motion.div
           key={`lantern-${index}`}
           className="absolute rounded-[48%] bg-[radial-gradient(circle_at_52%_54%,#fff5b8_0%,#ffe3a7_23%,#eaa0c7_57%,#d992bd_78%,rgba(217,146,189,.18)_100%)] opacity-80 shadow-[0_0_18px_rgba(255,220,164,.58),0_0_34px_rgba(223,147,192,.34)] blur-[0.2px]"
           style={{
@@ -187,7 +194,7 @@ function Petals() {
       aria-hidden="true"
     >
       {Array.from({ length: 20 }).map((_, index) => (
-        <motion.span
+        <Motion.span
           key={`petal-${index}`}
           className="absolute h-3 w-2 rounded-[70%_10%_70%_10%] bg-[linear-gradient(135deg,rgba(255,202,209,.86)_0%,rgba(230,147,162,.72)_48%,rgba(196,149,70,.48)_100%)] shadow-[0_2px_8px_rgba(155,83,82,.18)]"
           initial={{ y: -80, x: 0, rotate: 0, opacity: 0 }}
@@ -225,7 +232,7 @@ function SideBananaLeaves({ side }) {
       aria-hidden="true"
     >
       {Array.from({ length: 7 }).map((_, index) => (
-        <motion.div
+        <Motion.div
           key={`${side}-leaf-${index}`}
           className={`absolute ${
             isLeft ? "-left-12" : "-right-12"
@@ -257,7 +264,7 @@ function SideBananaLeaves({ side }) {
               isLeft ? "-rotate-[18deg]" : "rotate-[18deg]"
             }`}
           />
-        </motion.div>
+        </Motion.div>
       ))}
     </div>
   );
@@ -289,7 +296,7 @@ function HeroTemple() {
   const titleOpacity = useTransform(scrollYProgress, [0, 0.72], [1, 0.2]);
 
   return (
-    <motion.section
+    <Motion.section
       ref={heroRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -302,14 +309,14 @@ function HeroTemple() {
 
       <FloatingLanterns />
 
-      <motion.div
+      <Motion.div
         style={{ y: titleY, opacity: titleOpacity }}
         className="relative z-40 mx-auto max-w-2xl px-7 pt-20 text-center text-white sm:pt-24 md:pt-28 lg:pt-20"
       >
         <div className="pointer-events-none absolute left-1/2 top-[54%] -z-10 h-[220px] w-[min(86vw,620px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(28,46,58,.2)_0%,rgba(28,46,58,.12)_38%,transparent_72%)] blur-xl lg:h-[250px] lg:w-[660px]" />
 
         <p className="text-[11px] font-semibold uppercase tracking-[0.46em] text-white drop-shadow-[0_2px_8px_rgba(28,43,54,.42)] sm:text-[12px]">
-          Priyanka
+          Mythili
         </p>
 
         <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.8em] text-white drop-shadow-[0_2px_8px_rgba(28,43,54,.42)] sm:text-[12px]">
@@ -317,10 +324,10 @@ function HeroTemple() {
         </p>
 
         <h1
-          className="mt-2 text-[72px] font-normal leading-none text-white drop-shadow-[0_8px_24px_rgba(24,35,44,.52),0_0_20px_rgba(255,255,255,.22)] sm:text-[88px] md:text-[98px] lg:text-[112px]"
+          className="mt-2 text-[70px] font-normal leading-none text-white drop-shadow-[0_8px_24px_rgba(24,35,44,.52),0_0_20px_rgba(255,255,255,.22)] sm:text-[88px] md:text-[98px] lg:text-[112px]"
           style={scriptFont}
         >
-          Praveen
+          Shiva Ganesh
         </h1>
 
         <p className="mx-auto mt-5 max-w-[310px] text-[14px] font-semibold leading-7 text-white/95 drop-shadow-[0_3px_10px_rgba(18,29,38,.62)] sm:max-w-[380px] sm:text-[16px] lg:max-w-[520px] lg:text-[18px]">
@@ -334,14 +341,14 @@ function HeroTemple() {
         >
           శుభమస్తు
         </p>
-      </motion.div>
+      </Motion.div>
 
-      <motion.div
+      <Motion.div
         style={{ y: templeY, scale: templeScale }}
         className="absolute inset-x-0 bottom-[-1vh] z-30 mx-auto flex justify-center will-change-transform transform-gpu lg:bottom-[-86px]"
       >
         <div className="relative flex w-full justify-center will-change-transform transform-gpu">
-          <motion.div
+          <Motion.div
             className="absolute left-1/2 top-[18%] h-64 w-64 -translate-x-1/2 rounded-full bg-[#f4cf96]/20 blur-3xl"
             animate={{
               opacity: [0.35, 0.6, 0.35],
@@ -366,16 +373,16 @@ function HeroTemple() {
             draggable={false}
           />
         </div>
-      </motion.div>
+      </Motion.div>
 
       <div className="absolute inset-x-0 bottom-0 z-30 h-40 bg-gradient-to-t from-[#f5edd9] via-[#f2ead4]/74 to-transparent" />
-    </motion.section>
+    </Motion.section>
   );
 }
 
 function Section({ children, className = "" }) {
   return (
-    <motion.section
+    <Motion.section
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
@@ -389,7 +396,7 @@ function Section({ children, className = "" }) {
       <div className="pointer-events-none absolute bottom-4 left-4 h-5 w-5 border-b border-l border-[#c4a15b]/28" />
       <div className="pointer-events-none absolute bottom-4 right-4 h-5 w-5 border-b border-r border-[#c4a15b]/28" />
       <div className="relative z-10">{children}</div>
-    </motion.section>
+    </Motion.section>
   );
 }
 
@@ -424,7 +431,7 @@ function FloralBand() {
         <span className="h-px flex-1 bg-gradient-to-r from-transparent via-[#c4a15b]/60 to-[#c4a15b]/25" />
         <span className="h-2.5 w-2.5 rotate-45 rounded-[2px] border border-[#b99145]/70 bg-[#fff8e8] shadow-[0_0_18px_rgba(196,161,91,.22)]" />
         <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#b99145]/70 bg-[#fff8e8] text-[11px] font-semibold tracking-[0.16em] text-[#7d5529] shadow-[0_10px_24px_rgba(71,43,17,.12)]">
-          P & P
+          S & M
         </span>
         <span className="h-2.5 w-2.5 rotate-45 rounded-[2px] border border-[#b99145]/70 bg-[#fff8e8] shadow-[0_0_18px_rgba(196,161,91,.22)]" />
         <span className="h-px flex-1 bg-gradient-to-l from-transparent via-[#c4a15b]/60 to-[#c4a15b]/25" />
@@ -448,26 +455,31 @@ function WeddingDetailsCard() {
         className="mt-3 text-[29px] font-semibold uppercase tracking-[0.08em] text-[#3f2219] sm:text-[34px]"
         style={headingFont}
       >
-        21 June 2026
+        2 July 2026
       </h2>
 
       <OrnamentalDivider className="my-5" />
 
       <p className="mt-4 flex items-center justify-center gap-2 text-[15px] font-medium text-[#573728]">
-        <Clock size={15} /> Dinner from 07:00 PM onwards
+        <Clock size={15} /> Dinner from 07:30 PM onwards
       </p>
 
       <p className="mt-2 flex items-center justify-center gap-2 text-[15px] font-medium text-[#573728]">
-        <Sparkles size={15} /> Muhurtham at 02:32 AM, early hours of 22 June
+        <Sparkles size={15} /> Muhurtham at 08:28 PM
       </p>
 
       <p className="mt-2 flex items-center justify-center gap-2 text-[15px] font-medium text-[#573728]">
-        <MapPin size={15} /> S.V. Function Hall, Rajamahendravaram
+        <MapPin size={15} /> Sri Lakshmi Gardens, Khammam
       </p>
 
       <p className="mx-auto mt-5 max-w-xl text-[14px] font-medium leading-7 text-[#573728]/82 sm:text-[15px]">
-        Please join us on the evening of 21 June; the sacred muhurtham follows
-        after midnight in the early hours of 22 June.
+        Please join us on Thursday, 2 July 2026, as the sacred muhurtham and
+        dinner celebration bring both families together.
+      </p>
+
+      <p className="mx-auto mt-4 max-w-xl text-[13px] font-medium leading-7 text-[#573728]/76 sm:text-[14px]">
+        Chi. Shiva Ganesh with Chi.La.Sow. Mythili, elder daughter of Sri
+        Kondapalli Thirupathi Rao and Smt. Ganga, Pakabanda Bazar, Khammam.
       </p>
 
       <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -499,13 +511,13 @@ function BlessingsSection() {
         <OrnamentalDivider className="mt-5" />
 
         <p className="mx-auto mt-4 max-w-xl text-[16px] font-medium leading-8 text-[#573728] sm:text-[18px]">
-          With the blessings of Gummadi Anand, Smt. Lokeswari, and our beloved
-          elders, we request the honour of your presence as Praveen and Priyanka
-          begin their sacred journey together.
+          Allam Durga Rao and Yellamma request the honour of your presence as
+          Shiva Ganesh and Mythili begin their sacred journey together.
         </p>
 
         <p className="mx-auto mt-4 max-w-md text-[14px] font-medium italic leading-7 text-[#8c692d]">
-          May auspiciousness, joy, and togetherness bless this celebration.
+          With best compliments from Allam Srinu - Nagamani, Allam Siva Shanker
+          - Sumathi, Siva Kumar - Keerthi, and near and dear.
         </p>
       </div>
     </Section>
@@ -520,7 +532,7 @@ function EventsSection() {
 
       <div className="mt-6 space-y-3.5">
         {events.map((event, index) => (
-          <motion.div
+          <Motion.div
             key={event.title}
             initial={{ opacity: 0, x: index % 2 ? 18 : -18 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -553,7 +565,7 @@ function EventsSection() {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </Motion.div>
         ))}
       </div>
     </Section>
@@ -588,12 +600,13 @@ function CountdownSection() {
         ) : (
           <>
             <p className="mx-auto mt-5 max-w-[360px] text-[15px] font-medium leading-7 text-[#573728]/85 sm:text-[17px]">
-              Counting down to the blessed hour when two families gather as one.
+              Counting down to the blessed evening when two families gather as
+              one.
             </p>
 
             <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-3">
               {countdownItems.map((item, index) => (
-                <motion.div
+                <Motion.div
                   key={item.label}
                   animate={{ y: [0, -3, 0] }}
                   transition={{
@@ -618,7 +631,7 @@ function CountdownSection() {
                       {item.label}
                     </div>
                   </div>
-                </motion.div>
+                </Motion.div>
               ))}
             </div>
           </>
@@ -642,11 +655,11 @@ function VenueSection() {
             className="text-[23px] font-semibold uppercase tracking-[0.08em] text-[#3f2219]"
             style={headingFont}
           >
-            S.V. Function Hall
+            Sri Lakshmi Gardens
           </h3>
 
           <p className="mx-auto mt-2 max-w-sm text-[15px] font-medium leading-7 text-[#573728]">
-            J.N. Road, Rajamahendravaram
+            Bonakal Road, Khammam
           </p>
 
           <div className="mt-6 rounded-[12px] border border-[#d8ba6b]/45 bg-[#fff9ed]/75 p-4">
@@ -662,6 +675,14 @@ function VenueSection() {
               <Phone size={16} /> {FAMILY_CONTACT_NUMBER}
             </a>
 
+            <a
+              href={`tel:${SECONDARY_CONTACT_NUMBER}`}
+              className="mx-auto mt-2 inline-flex items-center justify-center gap-2 text-[15px] font-semibold text-[#3f2219] transition-colors hover:text-[#7d5529]"
+              aria-label={`Call family contact ${SECONDARY_CONTACT_NUMBER}`}
+            >
+              <Phone size={14} /> {SECONDARY_CONTACT_NUMBER}
+            </a>
+
             <p className="mx-auto mt-2 max-w-xs text-[13px] leading-6 text-[#573728]/78">
               For directions, arrival help, or any wedding-day assistance.
             </p>
@@ -672,7 +693,7 @@ function VenueSection() {
             target="_blank"
             rel="noreferrer"
             className={`mt-5 ${subtleButton}`}
-            aria-label="Get directions to S.V. Function Hall"
+            aria-label="Get directions to Sri Lakshmi Gardens"
           >
             Get Directions
           </a>
@@ -754,7 +775,7 @@ function RsvpSection() {
         will be treasured always.
       </p>
 
-      <motion.a
+      <Motion.a
         href={WHATSAPP_RSVP_URL}
         target="_blank"
         rel="noreferrer"
@@ -764,7 +785,7 @@ function RsvpSection() {
         aria-label="Confirm attendance on WhatsApp"
       >
         <MessageCircle size={18} /> Confirm on WhatsApp
-      </motion.a>
+      </Motion.a>
 
       <ShareInvitationButton />
     </Section>
@@ -799,7 +820,7 @@ export default function WeddingInvitation() {
         </div>
 
         <div className="relative z-30 px-8 pb-8 text-center text-[12px] uppercase tracking-[0.18em] text-[#6b4a2e]/70">
-          Made by Praveen❤️
+          Made with love for Shiva Ganesh & Mythili
         </div>
       </main>
     </div>
