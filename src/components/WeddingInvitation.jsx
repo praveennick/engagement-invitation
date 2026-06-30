@@ -29,7 +29,7 @@ const WHATSAPP_RSVP_URL =
 const FAMILY_CONTACT_NUMBER = "+919000396401";
 const SECONDARY_CONTACT_NUMBER = "+917794019401";
 const MUHURTHAM_DATE = new Date("2026-07-02T20:28:00+05:30");
-const INVITATION_URL = window.location.href;
+const INVITATION_URL = "https://shivawedsmythili.in/";
 const SHARE_INVITATION_MESSAGE = `🌸 Wedding Invitation 🌸
 
 We warmly invite you and your family to celebrate the wedding of
