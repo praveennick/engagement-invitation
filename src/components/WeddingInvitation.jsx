@@ -517,7 +517,7 @@ function BlessingsSection() {
 
         <p className="mx-auto mt-4 max-w-md text-[14px] font-medium italic leading-7 text-[#8c692d]">
           With best compliments from Allam Srinu - Nagamani, Allam Siva Shanker
-          - Sumathi, Siva Kumar - Keerthi, and near and dear.
+          - Sumathi, Siva Kumar - Keerthi, Near and Dear.
         </p>
       </div>
     </Section>
