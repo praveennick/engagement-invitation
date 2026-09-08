@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight, CalendarPlus, Check, Heart, MapPin, Menu, MessageCircle, Phone, Share2, Sparkles, UtensilsCrossed, X } from 'lucide-react';
 import { GOOGLE_MAPS_DIRECTIONS_URL, GOOGLE_MAPS_EMBED_URL, WHATSAPP_RSVP_URL, FAMILY_CONTACT_NUMBER, INVITATION_URL, SHARE_INVITATION_MESSAGE } from './weddingData';
 import './royal-invitation.css';
@@ -40,9 +40,49 @@ function Ornament() {
 }
 
 export default function RoyalInvitation() {
+  const pageRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [shareStatus, setShareStatus] = useState('');
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const page = pageRef.current;
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const targets = [...page.querySelectorAll('.invitation-art, .invitation-letter, .royal-section-heading, .royal-event, .royal-quote, .royal-venue-copy, .royal-map-frame, .rsvp-inner')];
+    let observer;
+    const reveal = element => {
+      element.classList.remove('reveal-pending');
+      element.classList.add('reveal-visible');
+      observer?.unobserve(element);
+    };
+    const onFocus = event => {
+      const target = event.target.closest('.reveal-pending');
+      if (target) reveal(target);
+    };
+    const setup = () => {
+      observer?.disconnect();
+      targets.forEach(element => element.classList.remove('reveal-pending', 'reveal-visible'));
+      if (preference.matches || !('IntersectionObserver' in window)) return;
+      observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) reveal(entry.target); });
+      }, { threshold: 0.08 });
+      targets.forEach(element => {
+        if (element.getBoundingClientRect().top >= window.innerHeight) {
+          element.classList.add('reveal-pending');
+          observer.observe(element);
+        }
+      });
+    };
+    setup();
+    preference.addEventListener('change', setup);
+    page.addEventListener('focusin', onFocus);
+    return () => {
+      observer?.disconnect();
+      preference.removeEventListener('change', setup);
+      page.removeEventListener('focusin', onFocus);
+      targets.forEach(element => element.classList.remove('reveal-pending', 'reveal-visible'));
+    };
+  }, []);
 
   async function shareInvitation() {
     setShareStatus('');
@@ -59,7 +99,7 @@ export default function RoyalInvitation() {
     }
   }
 
-  return <div className="royal-page">
+  return <div className="royal-page" ref={pageRef}>
     <a className="royal-skip" href="#celebrations">Skip to wedding details</a>
     <header className="royal-header">
       <a className="royal-brand" href="#home" aria-label="Praveen and Priyanka home">P<span>&</span>P<span className="brand-caption">THE WEDDING</span></a>
@@ -74,6 +114,7 @@ export default function RoyalInvitation() {
         <img className="royal-hero-image" src="/images/royal-mandapam.png" alt="" fetchPriority="high" />
         <div className="royal-hero-shade" />
         <div className="royal-hero-frame" aria-hidden="true" />
+        <div className="royal-gold-dust" aria-hidden="true">{Array.from({ length: 12 }, (_, index) => <span key={index} style={{ '--dust-x': `${8 + (index * 29) % 85}%`, '--dust-y': `${30 + (index * 17) % 60}%`, '--dust-delay': `${index * 0.1}s` }} />)}</div>
         <div className="royal-hero-content">
           <p className="royal-blessing" lang="te">శ్రీరస్తు · శుభమస్తు · అవిఘ్నమస్తు</p>
           <Ornament />
