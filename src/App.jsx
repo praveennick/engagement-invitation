@@ -1,10 +1,7 @@
-import "./App.css";
-import Marriage from "./components/Engagement";
-import WeddingInvitation from "./components/WeddingInvitation";
+import ClassicInvitation from "./components/ClassicInvitation";
 
 function App() {
-  // return <Marriage />;
-  return <WeddingInvitation />;
+  return <ClassicInvitation />;
 }
 
 export default App;

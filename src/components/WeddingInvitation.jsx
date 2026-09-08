@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion as Motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   CalendarDays,
   Clock,
@@ -154,7 +154,7 @@ function FloatingLanterns() {
       aria-hidden="true"
     >
       {lanterns.map((lantern, index) => (
-        <motion.div
+        <Motion.div
           key={`lantern-${index}`}
           className="absolute rounded-[48%] bg-[radial-gradient(circle_at_52%_54%,#fff5b8_0%,#ffe3a7_23%,#eaa0c7_57%,#d992bd_78%,rgba(217,146,189,.18)_100%)] opacity-80 shadow-[0_0_18px_rgba(255,220,164,.58),0_0_34px_rgba(223,147,192,.34)] blur-[0.2px]"
           style={{
@@ -187,7 +187,7 @@ function Petals() {
       aria-hidden="true"
     >
       {Array.from({ length: 20 }).map((_, index) => (
-        <motion.span
+        <Motion.span
           key={`petal-${index}`}
           className="absolute h-3 w-2 rounded-[70%_10%_70%_10%] bg-[linear-gradient(135deg,rgba(255,202,209,.86)_0%,rgba(230,147,162,.72)_48%,rgba(196,149,70,.48)_100%)] shadow-[0_2px_8px_rgba(155,83,82,.18)]"
           initial={{ y: -80, x: 0, rotate: 0, opacity: 0 }}
@@ -225,7 +225,7 @@ function SideBananaLeaves({ side }) {
       aria-hidden="true"
     >
       {Array.from({ length: 7 }).map((_, index) => (
-        <motion.div
+        <Motion.div
           key={`${side}-leaf-${index}`}
           className={`absolute ${
             isLeft ? "-left-12" : "-right-12"
@@ -257,7 +257,7 @@ function SideBananaLeaves({ side }) {
               isLeft ? "-rotate-[18deg]" : "rotate-[18deg]"
             }`}
           />
-        </motion.div>
+        </Motion.div>
       ))}
     </div>
   );
@@ -289,7 +289,7 @@ function HeroTemple() {
   const titleOpacity = useTransform(scrollYProgress, [0, 0.72], [1, 0.2]);
 
   return (
-    <motion.section
+    <Motion.section
       ref={heroRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -302,7 +302,7 @@ function HeroTemple() {
 
       <FloatingLanterns />
 
-      <motion.div
+      <Motion.div
         style={{ y: titleY, opacity: titleOpacity }}
         className="relative z-40 mx-auto max-w-2xl px-7 pt-20 text-center text-white sm:pt-24 md:pt-28 lg:pt-20"
       >
@@ -334,14 +334,14 @@ function HeroTemple() {
         >
           శుభమస్తు
         </p>
-      </motion.div>
+      </Motion.div>
 
-      <motion.div
+      <Motion.div
         style={{ y: templeY, scale: templeScale }}
         className="absolute inset-x-0 bottom-[-1vh] z-30 mx-auto flex justify-center will-change-transform transform-gpu lg:bottom-[-86px]"
       >
         <div className="relative flex w-full justify-center will-change-transform transform-gpu">
-          <motion.div
+          <Motion.div
             className="absolute left-1/2 top-[18%] h-64 w-64 -translate-x-1/2 rounded-full bg-[#f4cf96]/20 blur-3xl"
             animate={{
               opacity: [0.35, 0.6, 0.35],
@@ -366,16 +366,16 @@ function HeroTemple() {
             draggable={false}
           />
         </div>
-      </motion.div>
+      </Motion.div>
 
       <div className="absolute inset-x-0 bottom-0 z-30 h-40 bg-gradient-to-t from-[#f5edd9] via-[#f2ead4]/74 to-transparent" />
-    </motion.section>
+    </Motion.section>
   );
 }
 
 function Section({ children, className = "" }) {
   return (
-    <motion.section
+    <Motion.section
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
@@ -389,7 +389,7 @@ function Section({ children, className = "" }) {
       <div className="pointer-events-none absolute bottom-4 left-4 h-5 w-5 border-b border-l border-[#c4a15b]/28" />
       <div className="pointer-events-none absolute bottom-4 right-4 h-5 w-5 border-b border-r border-[#c4a15b]/28" />
       <div className="relative z-10">{children}</div>
-    </motion.section>
+    </Motion.section>
   );
 }
 
@@ -520,7 +520,7 @@ function EventsSection() {
 
       <div className="mt-6 space-y-3.5">
         {events.map((event, index) => (
-          <motion.div
+          <Motion.div
             key={event.title}
             initial={{ opacity: 0, x: index % 2 ? 18 : -18 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -553,7 +553,7 @@ function EventsSection() {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </Motion.div>
         ))}
       </div>
     </Section>
@@ -593,7 +593,7 @@ function CountdownSection() {
 
             <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-3">
               {countdownItems.map((item, index) => (
-                <motion.div
+                <Motion.div
                   key={item.label}
                   animate={{ y: [0, -3, 0] }}
                   transition={{
@@ -618,7 +618,7 @@ function CountdownSection() {
                       {item.label}
                     </div>
                   </div>
-                </motion.div>
+                </Motion.div>
               ))}
             </div>
           </>
@@ -754,7 +754,7 @@ function RsvpSection() {
         will be treasured always.
       </p>
 
-      <motion.a
+      <Motion.a
         href={WHATSAPP_RSVP_URL}
         target="_blank"
         rel="noreferrer"
@@ -764,7 +764,7 @@ function RsvpSection() {
         aria-label="Confirm attendance on WhatsApp"
       >
         <MessageCircle size={18} /> Confirm on WhatsApp
-      </motion.a>
+      </Motion.a>
 
       <ShareInvitationButton />
     </Section>
