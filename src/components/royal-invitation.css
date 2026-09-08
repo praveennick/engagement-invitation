@@ -1,0 +1,219 @@
+:root {
+  font-family: 'Lora', Georgia, serif;
+  color: #f5ecd9;
+  background: #092b25;
+  font-synthesis: none;
+  --royal-green: #092b25;
+  --royal-deep: #061e1a;
+  --royal-gold: #d8b875;
+  --royal-cream: #f5f0e5;
+  --royal-line: rgba(216, 184, 117, .3);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body { margin: 0; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible { outline: 2px solid #b68a3d; outline-offset: 6px; }
+::selection { background: #d8b875; color: #092b25; }
+.royal-page { overflow: clip; }
+.royal-page :is(h1, h2, h3, p, blockquote) { margin: 0; }
+.royal-page h2 { font: 400 clamp(42px, 4.3vw, 64px)/1.02 'Cormorant Garamond', Georgia, serif; letter-spacing: -.025em; }
+.royal-page h2 em { font-weight: 400; color: var(--royal-gold); }
+.royal-page p { line-height: 1.9; }
+.royal-page svg { flex-shrink: 0; }
+.royal-kicker { font: 10px/1.7 'Cinzel', Georgia, serif; letter-spacing: .21em; text-transform: uppercase; color: var(--royal-gold); }
+.royal-skip { position: fixed; top: -100px; left: 16px; padding: 14px 20px; background: var(--royal-cream); color: var(--royal-green); z-index: 100; }
+.royal-skip:focus { top: 12px; }
+.royal-header { height: 88px; padding: 0 6%; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--royal-line); background: var(--royal-deep); position: relative; z-index: 20; }
+.royal-brand { font: 30px/.9 'Cinzel', serif; color: var(--royal-gold); display: inline-block; text-align: center; }
+.royal-brand>span:not(.brand-caption) { font: 22px 'Great Vibes', cursive; margin: 0 4px; }
+.royal-brand .brand-caption { display: block; font: 7px Arial, sans-serif; letter-spacing: .32em; margin-top: 8px; }
+.royal-header nav { display: flex; align-items: center; gap: 34px; }
+.royal-header nav a { font: 10px 'Cinzel', serif; letter-spacing: .08em; padding: 14px 0; }
+.royal-header nav a:hover { color: var(--royal-gold); }
+.royal-header nav .nav-rsvp { display: flex; align-items: center; gap: 18px; border: 1px solid var(--royal-line); padding: 14px 20px; color: var(--royal-gold); margin-left: 15px; }
+.royal-menu-toggle { display: none; background: none; border: 1px solid var(--royal-line); padding: 10px; color: var(--royal-gold); }
+.royal-hero { min-height: 790px; min-height: min(900px, 94svh); position: relative; display: grid; place-items: center; text-align: center; isolation: isolate; padding: 65px 26px 80px; }
+.royal-hero-image, .royal-hero-shade { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; }
+.royal-hero-shade { background: linear-gradient(180deg, rgba(3, 19, 15, .13), rgba(3, 19, 15, .24) 50%, rgba(3, 19, 15, .5)), radial-gradient(ellipse at center, rgba(3, 19, 15, .58), transparent 68%); z-index: -2; }
+.royal-hero-frame { position: absolute; inset: 25px 30px; border: 1px solid rgba(224, 188, 111, .36); pointer-events: none; }
+.royal-hero-frame::before, .royal-hero-frame::after { content: ''; position: absolute; width: 45px; height: 45px; border: 2px solid var(--royal-gold); }
+.royal-hero-frame::before { left: -3px; top: -3px; border-right: 0; border-bottom: 0; }
+.royal-hero-frame::after { right: -3px; bottom: -3px; border-left: 0; border-top: 0; }
+.royal-hero-content { max-width: 850px; width: 100%; animation: royal-entrance 1.2s ease-out both; }
+.royal-blessing { color: #ead3a6; font-size: 15px; letter-spacing: .07em; }
+.royal-ornament { display: flex; align-items: center; justify-content: center; gap: 18px; color: var(--royal-gold); margin: 23px auto; }
+.royal-ornament>span { width: 65px; height: 1px; background: linear-gradient(90deg, transparent, var(--royal-gold)); }
+.royal-ornament>span:last-child { transform: rotate(180deg); }
+.royal-lotus { display: block; }
+.royal-hero h1 { font: 500 clamp(70px, 8vw, 116px)/.95 'Cormorant Garamond', Georgia, serif; color: #fff5df; letter-spacing: -.025em; margin: 25px 0 26px; text-shadow: 0 3px 25px #071c17; }
+.royal-hero h1>span { font: 400 62px/.7 'Great Vibes', cursive; display: block; color: var(--royal-gold); margin: 10px 0 7px; }
+.royal-hero-tagline { font: italic 17px/1.8 'Cormorant Garamond', serif; color: #e6dbc4; letter-spacing: .035em; }
+.royal-hero-date { display: flex; align-items: center; justify-content: center; gap: 24px; margin: 30px 0; }
+.royal-hero-date>span { font: 9px 'Cinzel', serif; letter-spacing: .16em; }
+.royal-hero-date strong { border-inline: 1px solid var(--royal-line); padding: 6px 25px; font: 16px 'Cinzel', serif; color: #efd7a3; letter-spacing: .1em; }
+.royal-button { min-height: 49px; display: inline-flex; align-items: center; justify-content: center; gap: 15px; padding: 16px 26px; border: 1px solid var(--royal-gold); font: 10px/1.5 'Cinzel', serif; letter-spacing: .09em; transition: transform .2s, background .2s, box-shadow .2s; }
+.royal-button:hover { transform: translateY(-3px); box-shadow: 0 8px 24px #0002; }
+.gold-button { color: #15342a; background: linear-gradient(110deg, #dfc58a, #c8a25f); }
+.gold-button:hover { background: #ead09a; }
+.outline-button { background: transparent; color: #e4c790; border-color: #8d794d; }
+.outline-button:hover { background: #ffffff08; }
+.hero-bottom-note { position: absolute; bottom: 43px; left: 0; right: 0; font: 8px 'Cinzel', serif; letter-spacing: .26em; color: #d2c5a7; }
+.royal-date-ribbon { display: flex; justify-content: center; align-items: center; gap: 43px; padding: 29px 24px; background: #102f27; border-block: 1px solid var(--royal-line); }
+.royal-date-ribbon>span:not(.ribbon-diamond) { display: flex; flex-direction: column; gap: 8px; font: 10px 'Lora', serif; color: #c4c7b5; text-align: center; }
+.royal-date-ribbon strong { font: 11px 'Cinzel', serif; color: #e7d5af; letter-spacing: .04em; }
+.ribbon-diamond { color: var(--royal-gold); font-size: 22px; }
+.royal-light { background: var(--royal-cream); color: #203c31; }
+.royal-light .royal-kicker { color: #896529; }
+.royal-light h2 em { color: #98713c; }
+.royal-light .royal-ornament { color: #a17b3c; }
+.royal-invitation-section { display: grid; grid-template-columns: .85fr 1.15fr; gap: 90px; align-items: center; padding: 108px max(6%, calc((100vw - 1130px)/2)); }
+.invitation-art { position: relative; min-width: 0; }
+.invitation-art>img { width: 100%; height: 610px; display: block; object-fit: cover; border-radius: 220px 220px 0 0; }
+.art-border { position: absolute; inset: 12px; border: 1px solid #d8b87585; border-radius: 220px 220px 0 0; pointer-events: none; }
+.art-label { position: absolute; bottom: 30px; left: 15%; right: 15%; padding: 20px 10px; background: #092b25eb; color: #edd7aa; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.art-label svg { width: 40px; height: 30px; }
+.art-label span { font: italic 20px/1.3 'Cormorant Garamond', serif; }
+.invitation-letter { text-align: center; }
+.invitation-letter h2 { margin: 17px 0 0; }
+.invitation-letter>p:not(.royal-kicker) { font-size: 12px; color: #697365; max-width: 445px; margin: 0 auto; }
+.invitation-letter h3 { font: 500 25px/1.4 'Cormorant Garamond', serif; margin: 14px 0; }
+.invitation-letter h3 span { color: #a17b3c; font-style: italic; }
+.couple-formal { margin: 22px 0; display: flex; flex-direction: column; gap: 4px; font: 500 31px 'Cormorant Garamond', serif; }
+.couple-formal small { color: #98713c; font: italic 17px 'Cormorant Garamond', serif; }
+.letter-signature { display: block; font: 29px 'Great Vibes', cursive; color: #947038; margin-top: 24px; }
+.royal-celebrations { padding: 90px max(6%, calc((100vw - 1080px)/2)); background: radial-gradient(ellipse at 100% 40%, #16433655, transparent 60%), #092b25; }
+.royal-section-heading { text-align: center; }
+.royal-section-heading h2 { margin: 16px 0 18px; }
+.royal-section-heading>p:not(.royal-kicker) { font-size: 12px; color: #b8c1af; }
+.royal-events { border-top: 1px solid var(--royal-line); margin-top: 45px; }
+.royal-event { display: grid; grid-template-columns: 115px 1fr 70px; align-items: start; gap: 40px; padding: 43px 20px; border-bottom: 1px solid var(--royal-line); }
+.event-calendar { border: 1px solid var(--royal-line); text-align: center; padding: 16px 10px; color: var(--royal-gold); }
+.event-calendar>span { display: block; font: 9px 'Cinzel', serif; letter-spacing: .18em; }
+.event-calendar strong { display: block; font: 58px/1.2 'Cormorant Garamond', serif; }
+.event-body h3 { font: 400 38px/1.1 'Cormorant Garamond', serif; margin: 12px 0 14px; }
+.event-body>p:not(.royal-kicker) { font-size: 12px; color: #bac4b5; max-width: 570px; }
+.event-time { display: flex; gap: 25px; flex-wrap: wrap; margin-top: 22px; font-size: 12px; }
+.event-time strong { color: #e5c996; font-weight: 400; }
+.event-time small { font: 8px Arial, sans-serif; }
+.royal-text-link { display: inline-flex; gap: 10px; align-items: center; font: 10px 'Cinzel', serif; color: #dfc68f; min-height: 44px; margin-top: 10px; }
+.royal-text-link:hover { text-decoration: underline; text-underline-offset: 5px; }
+.event-symbol { color: #b39253; margin-top: 20px; }
+.royal-timing-note { text-align: center; font-size: 11px; font-style: italic; color: #b8c1af; margin-top: 28px!important; }
+.royal-quote { padding: 55px 24px; text-align: center; background: #e7dbc2; color: #204135; border-block: 5px double #bfa879; }
+.royal-quote>svg { margin: 0 auto 15px; color: #9b773a; width: 45px; }
+.royal-quote blockquote { font: 400 clamp(29px, 3.3vw, 44px)/1.2 'Cormorant Garamond', serif; }
+.royal-quote em { color: #947038; }
+.royal-quote>span { display: block; font: 8px 'Cinzel', serif; letter-spacing: .25em; margin-top: 22px; }
+.royal-venue { padding: 95px max(6%, calc((100vw - 1130px)/2)); display: grid; grid-template-columns: .9fr 1.1fr; gap: 70px; align-items: center; }
+.royal-venue h2 { margin-top: 17px; }
+.venue-rule { width: 70px; height: 1px; background: #b99b60; margin: 30px 0; }
+.royal-venue-copy>svg { color: #947038; }
+.royal-venue h3 { font: 500 33px 'Cormorant Garamond', serif; margin: 12px 0; }
+.royal-venue-copy>p:not(.royal-kicker) { font-size: 13px; color: #697365; }
+.dark-button { background: #103b2f; color: #f3e7c9; border-color: #103b2f; margin-top: 27px; }
+.dark-button:hover { background: #1c4c3c; }
+.royal-contact { border-top: 1px solid #d4c8af; margin-top: 30px; padding-top: 23px; }
+.royal-contact>span { font: 8px 'Cinzel', serif; letter-spacing: .08em; color: #786e59; }
+.royal-contact a { display: flex; align-items: center; gap: 10px; margin-top: 10px; min-height: 35px; font-size: 14px; }
+.royal-map-frame { border: 1px solid #bca579; padding: 10px; background: #eae1cf; }
+.map-heading { display: flex; align-items: center; gap: 8px; padding: 14px 7px 20px; color: #716344; font: 8px 'Cinzel', serif; }
+.map-heading>span:last-child { margin-left: auto; font-size: 7px; }
+.royal-map-frame iframe { width: 100%; height: 365px; display: block; border: 0; }
+.map-bottom { display: flex; align-items: center; justify-content: space-between; padding: 21px 10px 12px; font: italic 19px 'Cormorant Garamond', serif; }
+.royal-rsvp { padding: 75px 7%; text-align: center; background: radial-gradient(ellipse at top, #1c4734, transparent 70%), #08261f; }
+.rsvp-inner { position: relative; border: 1px solid var(--royal-line); max-width: 1100px; margin: auto; padding: 35px 30px 22px; }
+.rsvp-inner::before { content: ''; position: absolute; inset: 8px; border: 1px solid #d8b87519; pointer-events: none; }
+.royal-rsvp h2 { margin: 20px 0; font-size: clamp(45px, 5vw, 72px); }
+.rsvp-inner>p:not(.royal-kicker) { font-size: 12px; color: #c5cbb8; }
+.royal-rsvp-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 30px; }
+.royal-share-status { margin-top: 18px!important; min-height: 24px; }
+.royal-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 32px 6%; background: #061e1a; border-top: 1px solid var(--royal-line); }
+.royal-footer p { font: 8px 'Cinzel', serif; color: #c6b387; letter-spacing: .13em; }
+.royal-footer p span { margin: 0 14px; }
+.royal-footer>span { font: 10px 'Lora', serif; color: #acb6a3; display: flex; align-items: center; gap: 5px; }
+@keyframes royal-entrance { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (min-width: 1600px) { .royal-hero { min-height: 900px; } }
+@media (max-width: 1000px) {
+  .royal-header { padding-inline: 4%; }
+  .royal-header nav { gap: 22px; }
+  .royal-header nav .nav-rsvp { margin-left: 0; padding: 12px; }
+  .royal-invitation-section { gap: 40px; padding: 75px 5%; }
+  .invitation-art>img { height: 570px; }
+  .royal-date-ribbon { gap: 24px; }
+  .royal-venue { gap: 35px; padding: 75px 5%; }
+  .map-heading>span:last-child { display: none; }
+}
+@media (max-width: 700px) {
+  html { scroll-padding-top: 20px; }
+  .royal-header { height: 75px; padding-inline: 24px; }
+  .royal-brand { font-size: 27px; }
+  .royal-menu-toggle { display: block; }
+  .royal-header nav { display: none; position: absolute; top: 75px; inset-inline: 0; background: #061e1a; padding: 20px 24px 28px; border-bottom: 1px solid var(--royal-line); box-shadow: 0 20px 25px #0004; }
+  .royal-header nav.is-open { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+  .royal-header nav a { min-height: 44px; }
+  .royal-header nav .nav-rsvp { justify-content: space-between; padding: 15px; }
+  .royal-hero { min-height: 735px; padding: 60px 23px 75px; }
+  .royal-hero-image { object-position: center; }
+  .royal-hero-shade { background: linear-gradient(180deg, #03130f33, #03130f66 45%, #03130f88); }
+  .royal-hero-frame { inset: 15px; }
+  .royal-blessing { font-size: 12px; letter-spacing: 0; }
+  .royal-hero .royal-kicker { font-size: 8px; letter-spacing: .13em; }
+  .royal-hero h1 { font-size: clamp(68px, 17vw, 95px); margin-block: 28px; }
+  .royal-hero h1>span { font-size: 51px; margin-block: 12px 7px; }
+  .royal-hero-tagline { font-size: 16px; }
+  .royal-hero-date { flex-wrap: wrap; gap: 12px; max-width: 300px; margin: 25px auto; }
+  .royal-hero-date strong { padding: 5px 12px; font-size: 13px; border-right: 0; }
+  .royal-hero-date>span:last-child { flex-basis: 100%; font-size: 8px; }
+  .hero-bottom-note { bottom: 32px; font-size: 6px; letter-spacing: .15em; }
+  .royal-ornament { gap: 13px; margin-block: 20px; }
+  .royal-ornament>span { width: 45px; }
+  .royal-ornament svg { width: 48px; height: 37px; }
+  .royal-date-ribbon { flex-wrap: wrap; padding: 24px 18px; gap: 20px 14px; }
+  .royal-date-ribbon>span:not(.ribbon-diamond) { font-size: 9px; }
+  .royal-date-ribbon strong { font-size: 9px; }
+  .royal-date-ribbon>span:last-child { flex-basis: 100%; padding-top: 16px; border-top: 1px solid var(--royal-line); }
+  .royal-date-ribbon>.ribbon-diamond:nth-of-type(4) { display: none; }
+  .royal-invitation-section { grid-template-columns: 1fr; padding: 60px 25px; gap: 43px; }
+  .invitation-art { max-width: 360px; width: 100%; margin: auto; }
+  .invitation-art>img { height: 410px; }
+  .art-label { bottom: 25px; left: 20%; right: 20%; padding: 14px 8px; }
+  .art-label span { font-size: 18px; }
+  .royal-kicker { font-size: 8px; letter-spacing: .14em; }
+  .invitation-letter h2 { font-size: 47px; }
+  .invitation-letter h3 { font-size: 24px; }
+  .invitation-letter>p:not(.royal-kicker) { font-size: 12px; }
+  .royal-celebrations { padding: 60px 24px; }
+  .royal-section-heading h2 { font-size: 44px; }
+  .royal-events { margin-top: 30px; }
+  .royal-event { grid-template-columns: 62px 1fr; gap: 20px; padding: 30px 0; }
+  .event-calendar { padding: 12px 5px; }
+  .event-calendar strong { font-size: 41px; }
+  .event-calendar>span { font-size: 7px; }
+  .event-body h3 { font-size: 30px; }
+  .event-body>p:not(.royal-kicker) { font-size: 11px; }
+  .event-time { flex-direction: column; gap: 10px; font-size: 11px; }
+  .event-symbol { display: none; }
+  .royal-text-link { font-size: 8px; gap: 7px; }
+  .royal-timing-note { font-size: 10px; }
+  .royal-quote { padding: 40px 25px; }
+  .royal-venue { padding: 60px 25px; grid-template-columns: 1fr; gap: 35px; }
+  .royal-venue h2 { font-size: 48px; }
+  .royal-map-frame iframe { height: 300px; }
+  .royal-rsvp { padding: 38px 16px; }
+  .rsvp-inner { padding: 20px 20px 15px; }
+  .royal-rsvp h2 { font-size: 46px; }
+  .rsvp-inner>p:not(.royal-kicker) { font-size: 11px; }
+  .royal-rsvp-actions { flex-direction: column; gap: 12px; }
+  .royal-button { padding-inline: 18px; font-size: 9px; }
+  .royal-footer { flex-direction: column; padding: 28px 20px; gap: 22px; }
+  .royal-footer p { font-size: 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .royal-page *, .royal-page *::before, .royal-page *::after { animation: none!important; transition: none!important; }
+}

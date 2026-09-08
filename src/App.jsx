@@ -1,7 +1,7 @@
-import ClassicInvitation from "./components/ClassicInvitation";
+import RoyalInvitation from "./components/RoyalInvitation";
 
 function App() {
-  return <ClassicInvitation />;
+  return <RoyalInvitation />;
 }
 
 export default App;
